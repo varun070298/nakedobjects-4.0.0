@@ -1,0 +1,172 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <name>Core</name>
+	<artifactId>core</artifactId>
+    <version>4.0.0</version>
+    <packaging>pom</packaging>
+
+	<parent>
+	    <groupId>org.nakedobjects</groupId>
+		<artifactId>nakedobjects-parent</artifactId>
+		<version>5</version>
+		<relativePath>../pom/pom.xml</relativePath>
+    </parent>
+
+    <scm>
+        <connection>scm:svn:http://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/tags/nakedobjects-4.0.0/core</connection>
+        <developerConnection>scm:svn:https://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/tags/nakedobjects-4.0.0/core</developerConnection>
+        <url>http://development.nakedobjects.org/trac/browser/framework/tags/nakedobjects-4.0.0/core</url>
+    </scm>
+
+    <modules>
+        <module>applib</module>
+        <module>metamodel</module>
+        <module>runtime</module>
+        <module>bytecode-cglib</module>
+        <module>bytecode-javassist</module>
+        <module>remoting</module>
+        <module>webapp</module>
+        <module>webserver</module>        
+    </modules>
+    
+	<build>
+	    <plugins>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-release-plugin</artifactId>
+               <configuration>
+                   <preparationGoals>clean install</preparationGoals>
+                   <autoVersionSubmodules>true</autoVersionSubmodules>
+                   <tagBase>https://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/tags/core</tagBase>
+               </configuration>
+            </plugin>
+         
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    
+    
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.jmock</groupId>
+            <artifactId>jmock-junit4</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.objenesis</groupId>
+            <artifactId>objenesis</artifactId>
+            <scope>test</scope>
+       </dependency>
+
+    </dependencies>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- applib -->
+            <dependency>
+                <groupId>org.nakedobjects</groupId>
+                <artifactId>applib</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.nakedobjects</groupId>
+                <artifactId>applib</artifactId>
+                <version>4.0.0</version>
+                <type>test-jar</type>
+            </dependency>
+
+            <!-- metamodel -->
+            <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+                <artifactId>metamodel</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+                <artifactId>metamodel</artifactId>
+                <version>4.0.0</version>
+                <type>test-jar</type>
+            </dependency>
+
+            <!-- remoting -->
+            <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+                <artifactId>remoting</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+                <artifactId>remoting</artifactId>
+                <version>4.0.0</version>
+                <type>test-jar</type>
+            </dependency>
+
+            <!-- runtime -->
+            <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+                <artifactId>runtime</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+                <artifactId>runtime</artifactId>
+                <version>4.0.0</version>
+                <type>test-jar</type>
+            </dependency>
+
+            <!-- webapp -->
+            <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+                <artifactId>webapp</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+                <artifactId>webapp</artifactId>
+                <version>4.0.0</version>
+                <type>test-jar</type>
+            </dependency>
+            
+            <!-- webserver -->
+            <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+                <artifactId>webserver</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+                <artifactId>webserver</artifactId>
+                <version>4.0.0</version>
+                <type>test-jar</type>
+            </dependency>
+            
+            <!-- bytecode -->
+            <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+                <artifactId>bytecode-cglib</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+			<dependency>
+				<groupId>org.nakedobjects.core</groupId>
+				<artifactId>bytecode-javassist</artifactId>
+                <version>4.0.0</version>
+			</dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+    
+	<name>Plug-ins</name>
+	<artifactId>plugins</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+
+	<parent>
+	    <groupId>org.nakedobjects</groupId>
+	    <artifactId>nakedobjects-parent</artifactId>
+	    <version>5</version>
+        <relativePath>../pom/pom.xml</relativePath>
+	</parent>
+	
+    <scm>
+        <connection>scm:svn:http://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/tags/nakedobjects-4.0.0/plugins</connection>
+        <developerConnection>scm:svn:https://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/tags/nakedobjects-4.0.0/plugins</developerConnection>
+        <url>http://development.nakedobjects.org/trac/browser/framework/tags/nakedobjects-4.0.0/plugins</url>
+    </scm>
+    
+    <build>
+        <plugins>          
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+   	    <profile>
+            <id>basic</id>
+            <activation>
+       	        <activeByDefault>true</activeByDefault>
+       	    </activation>
+       	    <modules>
+   		        <module>dnd-viewer</module>
+                <module>html-viewer</module>
+                <module>xml-persistor</module> 
+                <module>xstream-marshalling</module>
+                <module>http-remoting</module>
+                <module>headless</module>
+   		    </modules>
+   	    </profile>
+   	    <profile>
+   	        <id>all-plugins</id>
+            <modules>
+   		        <module>dnd-viewer</module>
+                <module>html-viewer</module>
+
+                <module>xml-persistor</module> 
+
+                <module>xstream-marshalling</module>
+                <module>http-remoting</module>
+
+                <module>headless</module>
+
+                <!-- Not part of 4.0        -->
+                <module>hibernate-persistor</module>
+                <module>berkeley-persistor</module>
+                <module>sql-persistor</module>
+           	</modules>
+   	    </profile>
+    </profiles>
+ 
+</project>	
+

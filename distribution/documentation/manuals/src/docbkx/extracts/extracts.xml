@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter>
+<title>Code extracts</title>
+
+<simplesect><title>ExampleObjectStore_createDatabase</title><programlisting id="ExampleObjectStore_createDatabase">    public static void main(String[] args) {
+        JdbcManager jdbcManager = new JdbcManager();
+        String createTable = "CREATE TABLE customer ( id INTEGER IDENTITY, name VARCHAR(256), version INTEGER)";
+        jdbcManager.execute(createTable);
+        jdbcManager.close();
+    }
+</programlisting></simplesect>
+
+<simplesect><title>ExampleObjectStore_addCommand</title><programlisting id="ExampleObjectStore_addCommand">            public void execute(NakedObjectTransaction transaction) throws ObjectPersistenceException {
+                LOG.debug("  create object " + object);
+                String user = NakedObjectsContext.getAuthenticationSession().getUserName();
+                SqlVersion version = new SqlVersion(user);
+                object.setOptimisticLock(version);
+                String insertCustomer = "INSERT into customer (id, name, version) values (1, '"
+                        + ((Customer) object.getObject()).getName() + "', " + version.sequence() + ")";
+                jdbcManager.execute(insertCustomer);
+            }
+</programlisting></simplesect>
+
+<simplesect><title>Location_usingTitleBuffer</title><programlisting id="Location_usingTitleBuffer">        TitleBuffer title = new TitleBuffer();
+        if (TitleBuffer.isEmpty(knownAs)) {
+            title.append(streetAddress);
+        } else {
+            title.append(knownAs);
+        }
+        return title.toString();
+</programlisting></simplesect>
+
+<simplesect><title>SpecificationExamples_one</title><programlisting id="SpecificationExamples_one">        NakedObjectSpecification spec;
+        spec = NakedObjectsContext.getSpecificationLoader().loadSpecification(Location.class);
+        String screenName = spec.getSingularName();
+</programlisting></simplesect>
+
+<simplesect><title>SpecificationExamples_two</title><programlisting id="SpecificationExamples_two">        NakedObjectAssociation[] associations = spec.getAssociations();
+        for (int i = 0; i &lt; associations.length; i++) {
+            String name = associations[i].getName();
+            boolean mustEnter = associations[i].isMandatory();
+            :
+            :
+        }
+</programlisting></simplesect>
+
+</chapter>

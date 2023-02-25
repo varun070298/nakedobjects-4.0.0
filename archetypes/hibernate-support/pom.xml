@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+    <name>Hibernate Support Archetype</name>
+    <groupId>org.nakedobjects.archetypes</groupId>
+    <artifactId>hibernate-support</artifactId>
+    <packaging>maven-archetype</packaging>
+    <version>1.0-beta-2-SNAPSHOT</version>
+  
+ 	<parent>
+	    <groupId>org.nakedobjects</groupId>
+	    <artifactId>nakedobjects-parent</artifactId>
+        <version>5</version>
+    </parent>
+
+    <scm>
+        <connection>scm:svn:http://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/trunk/archetypes/hibernate-support</connection>
+        <developerConnection>scm:svn:https://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/trunk/archetypes/hibernate-support</developerConnection>
+        <url>http://development.nakedobjects.org/trac/browser/framework/trunk/archetypes/hibernate-support</url>
+    </scm>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-archetype-plugin</artifactId>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

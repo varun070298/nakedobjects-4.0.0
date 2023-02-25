@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>Application Library</name>
+	<artifactId>applib</artifactId>
+
+    <parent>
+        <groupId>org.nakedobjects</groupId>
+        <artifactId>core</artifactId>
+        <version>4.0.0</version>
+	</parent>
+
+	<build>
+		<plugins>
+   	        <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-jar-plugin</artifactId>
+		        <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+	            </executions>
+	        </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                          <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                
+                <configuration>
+                    <quiet>true</quiet>
+
+                    <doctitle>Naked Objects App-Lib API</doctitle>
+
+                    <links>
+                        <link>http://logging.apache.org/log4j/1.2/apidocs/</link>
+                        <link>http://junit.sourceforge.net/javadoc/</link>
+                        <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+                        <link>http://java.sun.com/products/servlet/2.2/javadoc/</link>
+                    </links>
+                    <linksource>true</linksource>
+
+                    <groups>
+                        <group>
+                            <title>Application Library</title>
+                            <packages>org.nakedobjects.applib*</packages>
+                        </group>
+                    </groups>
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
+
+</project>

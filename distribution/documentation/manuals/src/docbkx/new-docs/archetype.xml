@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter version="5.0" xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:svg="http://www.w3.org/2000/svg"
+         xmlns:m="http://www.w3.org/1998/Math/MathML"
+         xmlns:html="http://www.w3.org/1999/xhtml"
+         xmlns:db="http://docbook.org/ns/docbook">
+  <title>sdfrasdf</title>
+
+  <note>
+    <para>The required files are not currently available from public maven
+    repositories, so they must be generated locally before the utilities in
+    thios section can be used.</para>
+
+    <para>To create the archetype Jars on your system run the following three
+    commands.</para>
+
+    <screen>$ mvn clean install
+$ mvn install -P dist
+$ mvn install -P archetype</screen>
+  </note>
+
+  <section>
+    <title>Creating new applications using Maven archetypes</title>
+
+    <para>Using Maven archetype plugin we can generate a new Naked Objects
+    application very quickly. These are multi-moduled projects with separate
+    sections for the domain code, fixtures, web interfaces and so on.</para>
+
+    <screen>[rcm@localhost ~]$ mvn archetype:generate -DarchetypeCatalog=local
+[INFO] Scanning for projects...
+[INFO] Searching repository for plugin with prefix: 'archetype'.
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Maven Default Project
+[INFO]    task-segment: [archetype:generate] (aggregator-style)
+[INFO] ------------------------------------------------------------------------
+[INFO] Preparing archetype:generate
+[INFO] No goals needed for project - skipping
+[INFO] Setting property: classpath.resource.loader.class =&gt; 'org.codehaus.plexus.velocity.ContextClassLoaderResourceLoader'.
+[INFO] Setting property: velocimacro.messages.on =&gt; 'false'.
+[INFO] Setting property: resource.loader =&gt; 'classpath'.
+[INFO] Setting property: resource.manager.logwhenfound =&gt; 'false'.
+[INFO] [archetype:generate]
+[INFO] Generating project in Interactive mode
+[INFO] No archetype defined. Using maven-archetype-quickstart (org.apache.maven.archetypes:maven-archetype-quickstart:1.0)
+Choose archetype:
+1: local -&gt; nakedobjects-application (Naked Objects Application (Archetype))
+2: local -&gt; nakedobjects-icons (Naked Objects Icons (Archetype))
+3: local -&gt; htmlviewer-war (Naked Objects WAR (Archetype))
+4: local -&gt; hibernate-support (Hibernate Support (Archetype))
+5: local -&gt; remoting-support (Naked Objects Remoting Support (Archetype))
+Choose a number:  (1/2/3/4/5): 1</screen>
+
+    <note>
+      <para>This example uses the archetype from the local catalog. This has
+      to be created by first building the framework on your machine. When the
+      NOF has been properly released this will be done using a remote
+      catalogue with the need for building the source on yout machine.</para>
+    </note>
+
+    <para>To create a project from an archetype you must specify a
+    <emphasis>group</emphasis> and <emphasis>artifact ID</emphasis>, a
+    <emphasis>version</emphasis> and a <emphasis>Java
+    package</emphasis>.</para>
+
+    <para>After choosing the archetype number and pressing enter you are
+    prompted for the project's details. The <emphasis>group</emphasis> is an
+    identifier representing your company/group; ours would typically be
+    "org.nakedobjects" for the domain followed by a name for the group of
+    products. The <emphasis>artifactId</emphasis> identifies the projects that
+    we are creating. The <emphasis>version</emphasis> indicates how mature the
+    project is, and should be left as the default, e.g. 1.0-SNAPSHOT. Finally,
+    the <emphasis>package</emphasis> is the base package name used for all
+    Java files. After these have been entered you are prompted to confirm by
+    entering Y, as shown below.</para>
+
+    <para>Be wary of using invalid names. Both <emphasis>groupId</emphasis>
+    and <emphasis>artifactId</emphasis> should be alphanumeric with dots to
+    separate the words. The <emphasis>package</emphasis> name should be a
+    valid Java package name, i.e. should have no spaces or dashes. Maven does
+    little to check these things.</para>
+
+    <screen>Define value for groupId: : org.example
+Define value for artifactId: : expenses
+Define value for version:  1.0-SNAPSHOT: : 
+Define value for package: : org.example.expenses
+Confirm properties configuration:
+groupId: org.example
+artifactId: expenses
+version: 1.0-SNAPSHOT
+package: org.example.expenses
+ Y: : y
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1 minute 13 seconds
+[INFO] Finished at: Thu Oct 02 20:42:50 BST 2008
+[INFO] Final Memory: 13M/247M
+[INFO] ------------------------------------------------------------------------
+</screen>
+
+    <para>This will create a new directory with the name of the
+    <emphasis>artifactId</emphasis>. So in this example this is
+    <filename>expenses as shown below.</filename><screen>expenses
+|-- dom
+|   |-- pom.xml
+|   `-- src
+|-- exploration
+|   |-- config
+|   |-- ide
+|   |-- pom.xml
+|   `-- src
+|-- fixture
+|   |-- pom.xml
+|   `-- src
+|-- pom.xml
+`-- service
+    |-- pom.xml
+    `-- src</screen></para>
+  </section>
+
+  <section>
+    <title>Building a Naked Objects application</title>
+
+    <para>Once an archetype is created it can be built using Maven and run.
+    Build using the <emphasis>build</emphasis> goal as shown here.</para>
+
+    <screen>[rcm@localhost expenses]$ mvn clean install
+[INFO] Scanning for projects...
+[INFO] Reactor build order: 
+[INFO]   Naked Object Application
+[INFO]   Domain Model
+[INFO]   Services
+[INFO]   Fixtures
+[INFO]   Exploration
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Naked Object Application
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean]
+[INFO] [site:attach-descriptor]
+[INFO] [install:install]
+[INFO] Installing /home/rcm/tmp/bearingpoint/expenses/pom.xml to /home/rcm/.m2/repository/org/example/expenses/1.0-SNAPSHOT/expenses-1.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Domain Model
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean]
+[INFO] Deleting directory /home/rcm/tmp/bearingpoint/expenses/dom/target
+[INFO] [resources:resources]
+[INFO] Using default encoding to copy filtered resources.
+[INFO] [compiler:compile]
+[INFO] Compiling 7 source files to /home/rcm/tmp/bearingpoint/expenses/dom/target/classes
+[INFO] [resources:testResources]
+[INFO] Using default encoding to copy filtered resources.
+[INFO] [compiler:testCompile]
+[INFO] No sources to compile
+[INFO] [surefire:test]
+[INFO] No tests to run.
+[INFO] [jar:jar]
+[INFO] Building jar: /home/rcm/tmp/bearingpoint/expenses/dom/target/expenses-dom-1.0-SNAPSHOT.jar
+[INFO] [install:install]
+[INFO] Installing /home/rcm/tmp/bearingpoint/expenses/dom/target/expenses-dom-1.0-SNAPSHOT.jar to /home/rcm/.m2/repository/org/example/expenses-dom/1.0-SNAPSHOT/expenses-dom-1.0-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Services
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean]
+[INFO] Deleting directory /home/rcm/tmp/bearingpoint/expenses/service/target
+[INFO] [resources:resources]
+[INFO] Using default encoding to copy filtered resources.
+[INFO] [compiler:compile]
+[INFO] Compiling 2 source files to /home/rcm/tmp/bearingpoint/expenses/service/target/classes
+[INFO] [resources:testResources]
+[INFO] Using default encoding to copy filtered resources.
+[INFO] [compiler:testCompile]
+[INFO] No sources to compile
+[INFO] [surefire:test]
+[INFO] No tests to run.
+[INFO] [jar:jar]
+[INFO] Building jar: /home/rcm/tmp/bearingpoint/expenses/service/target/expenses-service-1.0-SNAPSHOT.jar
+[INFO] [install:install]
+[INFO] Installing /home/rcm/tmp/bearingpoint/expenses/service/target/expenses-service-1.0-SNAPSHOT.jar to /home/rcm/.m2/repository/org/example/expenses-service/1.0-SNAPSHOT/expenses-service-1.0-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Fixtures
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean]
+[INFO] Deleting directory /home/rcm/tmp/bearingpoint/expenses/fixture/target
+[INFO] [resources:resources]
+[INFO] Using default encoding to copy filtered resources.
+[INFO] [compiler:compile]
+[INFO] Compiling 1 source file to /home/rcm/tmp/bearingpoint/expenses/fixture/target/classes
+[INFO] [resources:testResources]
+[INFO] Using default encoding to copy filtered resources.
+[INFO] [compiler:testCompile]
+[INFO] No sources to compile
+[INFO] [surefire:test]
+[INFO] No tests to run.
+[INFO] [jar:jar]
+[INFO] Building jar: /home/rcm/tmp/bearingpoint/expenses/fixture/target/expenses-fixture-1.0-SNAPSHOT.jar
+[INFO] [install:install]
+[INFO] Installing /home/rcm/tmp/bearingpoint/expenses/fixture/target/expenses-fixture-1.0-SNAPSHOT.jar to /home/rcm/.m2/repository/org/example/expenses-fixture/1.0-SNAPSHOT/expenses-fixture-1.0-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Exploration
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean]
+[INFO] Deleting directory /home/rcm/tmp/bearingpoint/expenses/exploration/target
+[INFO] [resources:resources]
+[INFO] Using default encoding to copy filtered resources.
+[INFO] [compiler:compile]
+[INFO] No sources to compile
+[INFO] [resources:testResources]
+[INFO] Using default encoding to copy filtered resources.
+[INFO] [compiler:testCompile]
+[INFO] No sources to compile
+[INFO] [surefire:test]
+[INFO] No tests to run.
+[INFO] [jar:jar]
+[INFO] Building jar: /home/rcm/tmp/bearingpoint/expenses/exploration/target/expenses.jar
+[INFO] [assembly:attached {execution: default}]
+[INFO] Reading assembly descriptor: src/main/assembly/descriptor.xml
+[INFO] Processing DependencySet (output=lib)
+[INFO] Copying files to /home/rcm/tmp/bearingpoint/expenses/exploration/target/expenses-exploration-1.0-SNAPSHOT-prototype.dir
+[WARNING] Assembly file: /home/rcm/tmp/bearingpoint/expenses/exploration/target/expenses-exploration-1.0-SNAPSHOT-prototype.dir is not a regular file (it may be a directory). It cannot be attached to the project build for installation or deployment.
+[INFO] [install:install]
+[INFO] Installing /home/rcm/tmp/bearingpoint/expenses/exploration/target/expenses.jar to /home/rcm/.m2/repository/org/example/expenses-exploration/1.0-SNAPSHOT/expenses-exploration-1.0-SNAPSHOT.jar
+[INFO] 
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] ------------------------------------------------------------------------
+[INFO] Naked Object Application .............................. SUCCESS [6.087s]
+[INFO] Domain Model .......................................... SUCCESS [8.711s]
+[INFO] Services .............................................. SUCCESS [2.432s]
+[INFO] Fixtures .............................................. SUCCESS [2.283s]
+[INFO] Exploration ........................................... SUCCESS [10.774s]
+[INFO] ------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 31 seconds
+[INFO] Finished at: Tue Mar 03 11:59:50 GMT 2009
+[INFO] Final Memory: 40M/495M
+[INFO] ------------------------------------------------------------------------
+[rcm@localhost expenses]$ </screen>
+
+    <para>Once the project is built the results can be found in the
+    <filename>exploration/target</filename> directory, which contains both a
+    zipped distribution (in this example
+    <filename>expenses-exploration-1.0-SNAPSHOT-prototype.zip</filename>) and
+    an expanded distribution (again for this example,
+    <filename>expenses-exploration-1.0-SNAPSHOT</filename>). Using the
+    contained script files the application can be run from the command
+    line.<screen>exploration
+|-- config
+|-- ide
+|-- pom.xml
+|-- src
+`-- target
+    |-- archive-tmp
+    |-- classes
+    |-- expenses-exploration-1.0-SNAPSHOT-prototype.dir
+    |   `-- expenses-exploration-1.0-SNAPSHOT
+    |       |-- config
+    |       |-- expenses.jar
+    |       |-- exploration-dnd.bat
+    |       |-- exploration-dnd.sh
+    |       |-- exploration-html.bat
+    |       |-- exploration-html.sh
+    |       |-- lib
+    |       |-- nakedobjects.log
+    |       |-- prototype-dnd.bat
+    |       |-- prototype-dnd.sh
+    |       |-- prototype-html.bat
+    |       `-- prototype-html.sh
+    |-- expenses-exploration-1.0-SNAPSHOT-prototype.zip
+    |-- expenses.jar
+    `-- maven-archiver</screen></para>
+  </section>
+
+  <section>
+    <title>Using Eclipse for development</title>
+
+    <para>After changing into this directory we can use the Maven eclipse
+    plug-in to set up an Eclipse workspace.</para>
+
+    <screen>[rcm@localhost ~]$ cd expenses/
+[rcm@localhost expenses]$ mvn eclipse:eclipse
+[INFO] Scanning for projects...
+[INFO] Reactor build order: 
+[INFO]   Naked Object Application
+[INFO]   Domain Model
+[INFO]   Fixtures
+[INFO]   Services
+[INFO]   Exploration
+[INFO]   Hibernate Object Store
+[INFO]   Web App
+[INFO]   Client Distribution
+[INFO]   Server Distribution
+[INFO] Searching repository for plugin with prefix: 'eclipse'.
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Naked Object Application
+[INFO]    task-segment: [eclipse:eclipse]
+[INFO] ------------------------------------------------------------------------
+[INFO] Preparing eclipse:eclipse
+:
+:
+:
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1 minute 22 seconds
+[INFO] Finished at: Thu Oct 02 20:44:41 BST 2008
+[INFO] Final Memory: 32M/247M
+[INFO] ------------------------------------------------------------------------</screen>
+
+    <para>This downloads all the required libraries and creates
+    <filename>.project</filename> and <filename>.classpath</filename> files
+    for Eclipse to use. After this is complete we can start up Eclipse and
+    import the projects.</para>
+
+    <screen>[rcm@localhost expenses]$ eclipse -data</screen>
+
+    <screenshot>
+      <info>
+        <title></title>
+      </info>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/eclipse-platform.png" width="40%"></imagedata>
+        </imageobject>
+      </mediaobject>
+    </screenshot>
+
+    <screenshot>
+      <info>
+        <title></title>
+      </info>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/eclipse-Import.png" width="40%"></imagedata>
+        </imageobject>
+      </mediaobject>
+    </screenshot>
+
+    <screenshot>
+      <info>
+        <title></title>
+      </info>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/eclipse-Import2.png" width="40%"></imagedata>
+        </imageobject>
+      </mediaobject>
+    </screenshot>
+
+    <screenshot>
+      <info>
+        <title></title>
+      </info>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/eclipse-Preferences%20.png" width="40%"></imagedata>
+        </imageobject>
+      </mediaobject>
+    </screenshot>
+
+    <screenshot>
+      <info>
+        <title></title>
+      </info>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/eclipse-Run%20Configurations%20.png"
+                     width="40%"></imagedata>
+        </imageobject>
+      </mediaobject>
+    </screenshot>
+
+    <screenshot>
+      <info>
+        <title></title>
+      </info>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/eclispe-Select%20Main%20Type%20.png"
+                     width="40%"></imagedata>
+        </imageobject>
+      </mediaobject>
+    </screenshot>
+
+    <screenshot>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/example-Login.png" width="40%"></imagedata>
+        </imageobject>
+      </mediaobject>
+    </screenshot>
+
+    <screenshot>
+      <info>
+        <title></title>
+      </info>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/example-screen.png" width="40%"></imagedata>
+        </imageobject>
+      </mediaobject>
+    </screenshot>
+
+    <para></para>
+  </section>
+</chapter>

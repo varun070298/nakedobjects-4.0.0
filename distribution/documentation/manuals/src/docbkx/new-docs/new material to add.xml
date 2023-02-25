@@ -1,0 +1,1489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<book>
+  <bookinfo>
+    <title></title>
+
+    <author>
+      <firstname></firstname>
+
+      <surname></surname>
+
+      <affiliation>
+        <orgname></orgname>
+      </affiliation>
+    </author>
+
+    <pubdate></pubdate>
+  </bookinfo>
+
+  <chapter>
+    <title>Getting help</title>
+
+    <section>
+      <title></title>
+
+      <para>TODO list out the forums etc</para>
+
+      <para></para>
+
+      <para></para>
+
+      <para>If you are asked from diagnostic information then run Naked
+      Objects as follows to capture details about your machine, configuration
+      and Naked Objects.</para>
+
+      <programlisting>$ nakedobjects.sh --diagnostics &gt; diagnostics.txt</programlisting>
+    </section>
+
+    <section>
+      <title>Server monitoring</title>
+
+      <para>The NO server can be monitored via a web browser using <ulink
+      url="http://localhost:8081/">http://localhost:8081/</ulink>.</para>
+
+      <para>The port can be changed from its default of 8081 using the port
+      property like this:</para>
+
+      <programlisting>nakedobjects.monitor.http.port=9000</programlisting>
+
+      <para>The NO server can also be monitored using telnet on port
+      8009.</para>
+
+      <para>The port can be changed from its default of 8009 using the port
+      property like this:</para>
+
+      <programlisting>nakedobjects.monitor.telnet.port=9000</programlisting>
+
+      <para>Commands include: Overview, Authenticator, Configuration,
+      Reflector, Listeners, Events, Contexts, shutdown and bye.</para>
+
+      <para>Shutdown terminate the NO server.</para>
+
+      <para>Bye disconnects the telnet session.</para>
+
+      <para></para>
+    </section>
+
+    <section>
+      <title>Loading configurations</title>
+
+      <para>Configurations are loaded by a ConfigurationLoader. The loader
+      should immediately create a Configuration object, and then can be used
+      to add more confiration properties to the configuration object, ie
+      properties cannot be added the Configuration object directly. Properties
+      can loaded via the ConfigurationLoader either from files, via Properties
+      object, or as key-value pairs. When files are loaded they can be
+      specified, via the addConfigurationFile(file name, ensure loaded)
+      method, as mandatory or optional. If mandatory then the file must
+      exist.</para>
+
+      <para>Although properties can be accessed from the Configuration object
+      at any point, it should be remembered that the properties that it
+      contains only include properties that have been loaded so far.</para>
+
+      <para>The default property loader (ConfigurationDefaultLoader) reads the
+      file nakedobjects.properties from the directory config. The directory
+      can be changed by specifying it as the parameter of the single parameter
+      constructor. This loader uses Java style property files of the
+      form</para>
+
+      <programlisting>name=value
+name2=value2 </programlisting>
+
+      <para></para>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Remoting</title>
+
+    <para>Naked Objects allows remote clients to interact with a server by
+    passing requests over a communication for another VM to deal with instead
+    of user's VM as would happen in the standalone version. Each request
+    starts by passing over authentication details to ensure the user is valid
+    and to allow request to be authorised (altough requests are never passed
+    from the client when the client knows it is not authorised, this guards
+    against malicious access). Following that is the data for the request and
+    here references are passed (using the <classname>Oid</classname> class)
+    for persistent object, while graphs of data are passed for transient
+    objects.</para>
+
+    <para>Requests are routed to the <classname>ServerFacade</classname>
+    object, where each specific request results in a calls to a specific
+    method. For example a find request goes to the
+    <methodname>findInstances</methodname> method while a change to an objects
+    property goes to the <methodname>setAssociation</methodname> method. The
+    facade then decodes the parameters of the request into objectst that Naked
+    Objects can deal with. So, for example, an
+    <classname>IdentityData</classname> is used to look up a persistent
+    instance, while a identifier string is used to find a
+    <classname>NakedObjectMember</classname>. With the details of the request
+    converted to Naked Objects objects the requisite call is made into the
+    Naked Objects system. After that call is made two things are returned to
+    the client, this time by converting Naked Objects objects to transferable
+    data objects. First, the result of the call into Naked objects is return
+    and, second, any changes made to any objects involved (the object changed
+    set) are passed back for the client to update the objects that it
+    has.</para>
+
+    <para>Connections from the client are accepted by the ServerListener,
+    which in the case the</para>
+  </chapter>
+
+  <chapter>
+    <title>Building a Naked Objects application with Ant</title>
+
+    <para></para>
+
+    <sect1>
+      <title>Creating a web-app</title>
+
+      <para>From the same set of project files we can create a
+      <emphasis>war</emphasis> file for running Naked Objects on a web server
+      such as Tomcat. Running Ant again with the <emphasis
+      role="strong">web-app</emphasis> target will create war file in the
+      <filename class="directory" moreinfo="none">dist</filename> directory.
+      It is important to note that we do not need to provide and additional
+      files or configurations to create the war.</para>
+
+      <screen format="linespecific">$ ant web-app
+Buildfile: build.xml
+
+compile:
+web-app:
+    [mkdir] Created dir: /home/rcm/no-development/release-trial/office-workspace/build/war
+    [unwar] Expanding: /home/rcm/tmp/release/developer/lib/nos-web-app-3.0M4D2-SNAPSHOT.war into /home/rcm/no-development/release-trial/office-workspace/build/war
+      [war] Building war: /home/rcm/no-development/release-trial/office-workspace/dist/example.war
+BUILD SUCCESSFUL
+Total time: 5 seconds</screen>
+
+      <para></para>
+
+      <para></para>
+
+      <para></para>
+
+      <para></para>
+
+      <para></para>
+
+      <sect2>
+        <title>Persistor</title>
+
+        <screen format="linespecific">-r &lt;persistor&gt;
+--persistor &lt;persistor&gt;</screen>
+
+        <para>Ignored if type is client.</para>
+
+        <para>The persistor option allows you to choose how the objects
+        created by the system will be persisted so they are still available
+        the next time you run the system. The following options are available
+        with the current distribution, and if none is specified then the
+        in-memory persistor will be used for exploration mode and xml
+        persistor will be used for other non-client modes by default.</para>
+
+        <para><emphasis>in-memory</emphasis> - A simple non-persisting
+        mechanism that will only hold the persisted object while the virtual
+        machine is running. This is used for testing and demonstrating.</para>
+
+        <para><emphasis>xml</emphasis> - A simple file based mechanism that
+        encodes each object's data in an XML file. Alongside the data files
+        for the objects are instance lists listing all the files for each type
+        of object.</para>
+
+        <para><emphasis>sql</emphasis> - A simple JDBC based mechanism that
+        creates basic tables for each object type and uses these to store the
+        object's data.</para>
+
+        <para><emphasis>hibernate</emphasis> - Interface to Hibernate ORM,
+        allowing automatic persistence of an entire DOM with the power and
+        flexibility that Hibernate provides.</para>
+
+        <para><emphasis>&lt;class name&gt;</emphasis> - By specifying a class
+        name the boot loader will load up that class as the persistor.</para>
+      </sect2>
+
+      <sect2>
+        <title>Viewer</title>
+
+        <screen format="linespecific">-v &lt;viewer&gt;
+--viewer &lt;viewer&gt;</screen>
+
+        <para>Ignored if type is server.</para>
+
+        <para>The viewer option allows you to choose the user interface that
+        is used to access your Naked Objects application. The following
+        options are available with the current distribution, and if none is
+        specified then the drag and drop view will be used by default.</para>
+
+        <para><emphasis>dnd</emphasis> - Drag and Drop viewer</para>
+
+        <para><emphasis>cli</emphasis> - Console based Command Line
+        Interface</para>
+
+        <para><emphasis>cli-awt</emphasis> -Command Line Interface running via
+        a basic Java AWT window</para>
+
+        <para><emphasis>web</emphasis> - Web browser viewer - accessed via
+        standard web browser such as FireFox, Internet Explorer or
+        Opera</para>
+
+        <para><emphasis>&lt;class name&gt;</emphasis> - By specifying a class
+        name the boot loader will load up that class as the viewer</para>
+      </sect2>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>User profiles</title>
+
+    <para>Information about a user of the system (rather that a user of the
+    application domain model) is stored in a
+    <classname>UserProfile</classname> object which is got from the
+    <classname>UserProfileService</classname>, which in turn is accessible
+    from <classname>NakedObjectSession</classname>. There is also convienence
+    methods on <classname>NakedObjectsContext</classname> to get both the
+    <classname>UserProfile</classname> and the
+    <classname>UserProfileService</classname>. The user profile details the
+    perspectives the user has set up and options that have been specified,
+    typically for the user interfaces. The user profile service provides a way
+    to create, save and retrieve the user profiles, specifically the profile
+    of the current user. The service in turn has a
+    <classname>UserProfilePersistor</classname> that is used to do the actual
+    persistence.</para>
+
+    <para>Setting up profiles</para>
+
+    <para>Profiles can be created at start up by creating
+    <classname>UserProfileFixture</classname> subclasses. Theses are only ever
+    loaded once as the fixture installer checks with
+    <methodname>UserProfileSevice.isInitialized()</methodname> to see if the
+    service is already set up. The profile fixture (which is defined in the
+    application library and is therefore not part of the Naked Objects
+    framework) loads the profiles into Naked Objects by passing in an
+    implementation of ProfilePersistor that provides a way for the perspective
+    to make requests of the framework.</para>
+
+    <para></para>
+
+    <para></para>
+
+    <para></para>
+  </chapter>
+
+  <chapter>
+    <title>Working with the Hibernate Object Store</title>
+
+    <para>In this section we look at how to store domain objects in a database
+    using the Hibernate Object Store (HOS). Some knowledge of Hibernate is
+    expected.</para>
+
+    <para>The code used throughout this section can be found in the Naked
+    Objects distribution download in the examples directory: <filename
+    class="directory" moreinfo="none">examples/expenses</filename>. To run the
+    examples execute the following command:</para>
+
+    <screen format="linespecific">$ ant standalone-hibernate</screen>
+
+    <para>All the other examples may also be run this way.</para>
+
+    <para>The HSQLDB database is used to store the data under the <filename
+    class="directory" moreinfo="none">tmp</filename> directory. If you wish to
+    see what data has been loaded to the database, you can run the HSQLDB
+    database manager using the following code. This tool can list the tables
+    and their columns, and you can run SQL commands to query the tables. If
+    you wish to reset the database to start again then simply delete this
+    directory.</para>
+
+    <screen format="linespecific">$ java -cp ..\..\lib\hsqldb-1.8.0.7.jar org.hsqldb.util.DatabaseManager</screen>
+
+    <sect1>
+      <title>Configuring the system to work with Hibernate</title>
+
+      <para>The first step is to configure the HOS. This uses a configuration
+      file <filename class="directory"
+      moreinfo="none">hibernate.properties</filename>, as well as the normal
+      <filename class="directory"
+      moreinfo="none">nakedobjects.properties</filename>, and is loaded from
+      the ClassPath. In addition, an optional <filename class="directory"
+      moreinfo="none">logging.properties</filename> file may also be present.
+      In order to automatically map your domain objects to a database schema,
+      <methodname>nakedobjects.persistence.hibernate.auto</methodname> must be
+      <emphasis>true</emphasis>, and the entity (domain) classes must be
+      listed under
+      <methodname>nakedobjects.persistence.hibernate.classes</methodname>. To
+      see a full list of available properties, and their possible values see
+      the section on <link endlink="">Hibernate Object Store
+      Properties</link>.</para>
+
+      <programlisting format="linespecific"># turn on automatic mapping of Naked Objects to Hibernate
+nakedobjects.persistence.hibernate.auto = true
+# drop/recreate on setup
+nakedobjects.persistence.hibernate.schema-export = true
+# Hibernate type used to map List and InternalCollection. Allowed values list/bag
+nakedobjects.persistence.hibernate.list = bag
+# map collections as one-to-many or many-to-many? Allowed values one/many
+nakedobjects.persistence.hibernate.collections = one
+# assume relationships are bidirectional - i.e. map with inverse="true"
+nakedobjects.persistence.hibernate.assumeBidirectional = true
+# shutdown the DB - required for Derby, useful for HSQL as it compacts the files
+nakedobjects.persistence.hibernate.shutdown = true
+
+# classes which Hibernate must auto map
+nakedobjects.persistence.hibernate.classes =  \
+    org.nakedobjects.object.application.BasicApplicationContext \
+  , org.nakedobjects.object.application.SimpleUser \
+  , org.nakedobjects.example.expenses.defaults.Claim \
+  , org.nakedobjects.example.expenses.defaults.Employee \
+  , org.nakedobjects.example.expenses.defaults.ExpenseType \
+  , org.nakedobjects.example.expenses.defaults.Item \
+  , org.nakedobjects.example.expenses.defaults.TemplateClaim \
+  , org.nakedobjects.example.expenses.item.Airfare \
+  , org.nakedobjects.example.expenses.item.CarRental \
+  , org.nakedobjects.example.expenses.item.GeneralExpense \
+  , org.nakedobjects.example.expenses.item.Hotel \
+  , org.nakedobjects.example.expenses.item.Journey \
+  , org.nakedobjects.example.expenses.item.Meal \
+  , org.nakedobjects.example.expenses.item.MobilePhone \
+  , org.nakedobjects.example.expenses.item.PrivateCarJourney \
+  , org.nakedobjects.example.expenses.item.Taxi \
+  , org.nakedobjects.example.expenses.item.Train
+
+nakedobjects.services.prefix = \
+   org.nakedobjects.example.expenses.resources.hibernate
+nakedobjects.services = HibernateClaimRepository \
+  , HibernateEmployeeRepository \
+  , HibernateExpenseTypeRepository \
+  , HibernateItemRepository
+
+nakedobjects.fixtures.prefix = \
+    org.nakedobjects.example.expenses.fixture
+nakedobjects.fixtures = ExpenseTypes, Employees \
+   , RichardPsExpenses, Context, CurrentUser</programlisting>
+
+      <para>Note that <methodname>nakedobjects.services</methodname> is still
+      required to specify which resources are loaded, but now we use Hibernate
+      specific implementations. We will cover these later.</para>
+    </sect1>
+
+    <sect1>
+      <title>Managing Hibernate Mapping Files</title>
+
+      <para>There are a number of options for creating and managing Hibernate
+      mapping files within the naked objects framework.</para>
+
+      <sect2>
+        <title>Automatic</title>
+
+        <para>Allow Hibernate to auto-generate the mapping files. These will
+        then be stored in the export directory and reused each time the
+        application is started. They can be regenerated either by deleting the
+        mapping files from their export directory or by setting the regenerate
+        flag.</para>
+      </sect2>
+
+      <sect2>
+        <title>Manual</title>
+
+        <para>Write the mapping files manually. They can then be placed in the
+        export directory, or elsewhere on the classpath, and identified within
+        the <filename class="directory"
+        moreinfo="none">hibernate.cfg.xml</filename> file with a mapping tag
+        (see below).</para>
+      </sect2>
+
+      <sect2>
+        <title>Customised</title>
+
+        <para>Allow Hibernate to auto generate the mapping files and then
+        optimise these by hand.</para>
+
+        <para>For both manual and customised files care should be taken not to
+        set the regenerate flag if the files are being picked up from the
+        export directory as they will be overwritten by new auto generated
+        files.</para>
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>Configuration options for Hibernate</title>
+
+      <para>The Hibernate configuration uses the normal <filename
+      class="directory" moreinfo="none">hibernate.cfg.xml</filename> file.
+      This configures the database engine to use the specified file to store
+      the database while running as an integral part of Naked Objects (that
+      is: not as a separate process).</para>
+
+      <programlisting format="linespecific">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"&gt;
+&lt;hibernate-configuration&gt;
+  &lt;session-factory&gt;
+    &lt;property name="bytecode.use_reflection_optimizer"&gt;true&lt;/property&gt;
+
+    &lt;property name="connection.driver_class"&gt;org.hsqldb.jdbcDriver&lt;/property&gt;
+    &lt;property name="connection.username"&gt;sa&lt;/property&gt;
+    &lt;property name="connection.password"&gt;&lt;/property&gt;
+    &lt;property name="connection.url"&gt;jdbc:hsqldb:file:tmp/hsql-db&lt;/property&gt;
+    &lt;property name="dialect"&gt;org.hibernate.dialect.HSQLDialect&lt;/property&gt;
+       
+    &lt;property name="current_session_context_class"&gt;
+      org.hibernate.context.ThreadLocalSessionContext
+    &lt;/property&gt;
+        
+    &lt;property name="connection.provider_class"&gt;
+      org.hibernate.connection.C3P0ConnectionProvider
+    &lt;/property&gt;
+    &lt;property name="hibernate.c3p0.minSize"&gt;3&lt;/property&gt;
+    &lt;property name="hibernate.c3p0.timeout"&gt;1000&lt;/property&gt;
+  &lt;/session-factory&gt;
+&lt;/hibernate-configuration&gt;</programlisting>
+
+      <para>If any entities are to be mapped without using the HOS automatic
+      mapping then they should be specified here using <literal
+      moreinfo="none">&lt;mapping&gt;</literal> tags, and a separate <filename
+      class="directory" moreinfo="none">hbm.xml</filename> file created to
+      define the mapping. You can also change the JDBC connection provider, or
+      specify any other Hibernate configuration here, if required.</para>
+
+      <para>The HOS requires that the
+      <methodname>current_session_context_class</methodname> property must be
+      left as
+      <classname>org.hibernate.context.ThreadLocalSessionContext</classname>.</para>
+
+      <sect2>
+        <title>Connection Pooling</title>
+
+        <para>C3po is used for connection pooling. When used with Hibernate
+        c3po has two sets of configuration. The first within the <filename
+        class="directory" moreinfo="none">hibernate.cfg.xml</filename> file.
+        E.g.</para>
+
+        <programlisting format="linespecific">&lt;property name="hibernate.c3p0.acquire_increment"&gt;1&lt;/property&gt; 
+&lt;property name="hibernate.c3p0.idle_test_period"&gt;100&lt;/property&gt; &lt;!-- seconds --&gt; 
+&lt;property name="hibernate.c3p0.max_size"&gt;90&lt;/property&gt; 
+&lt;property name="hibernate.c3p0.max_statements"&gt;0&lt;/property&gt; 
+&lt;property name="hibernate.c3p0.min_size"&gt;10&lt;/property&gt; 
+&lt;property name="hibernate.c3p0.timeout"&gt;100&lt;/property&gt; &lt;!-- seconds --&gt; </programlisting>
+
+        <para>And the second within the <filename class="directory"
+        moreinfo="none">c3po.properties</filename> file. For example, these
+        settings will help debug connection closure problems.</para>
+
+        <programlisting format="linespecific">c3p0.debugUnreturnedConnectionStackTraces=true
+c3p0.unreturnedConnectionTimeout=100</programlisting>
+
+        <para>The <filename class="directory"
+        moreinfo="none">c3po.properties</filename> file is optional as are all
+        the c3po properties within <filename class="directory"
+        moreinfo="none">hibernate.cfg.xml</filename>. Both files should be on
+        the classpath, with the <filename class="directory"
+        moreinfo="none">hibernate.cfg.xml</filename> file specifically in the
+        resources directory. All properties default to values as described in
+        the <ulink
+        url="http://www.mchange.com/projects/c3p0/index.html#appendix_d">c3po
+        documentation</ulink>. As your project approaches the deployment
+        phase, c3po settings should be tuned for the particular configuration
+        the system is running on.</para>
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>Writing Hibernate repositories</title>
+
+      <para>In the early stages of prototyping a domain model, it is common
+      practice to use 'naive' implementations of repositories, that operate
+      with all objects in memory. Subsequently, the prototype may be run with
+      the HOS, in which case it is appropriate to replace some or all of those
+      repository implementations with Hibernate-specific implementations,
+      which use the power of the Hibernate Query Language and the database to
+      perform queries. For the expenses prototype four Repositories were
+      created under
+      <classname>org.nakedobjects.example.expenses.resources.naive</classname>.
+      These classes provide simple implementations for retrieving objects by
+      looping through all instances of a class, and comparing values (using an
+      implementation of the provided Filter interface).</para>
+
+      <para>For example, in <classname>NaiveEmployeeRepository</classname> the
+      method to find an <classname>Employee</classname> by name is</para>
+
+      <programlisting format="linespecific">public List&lt;Employee&gt; searchByName(@Named("Employee Name")final String name) {
+        Filter filter = new Filter() {
+            public boolean accept(Object pojo) {
+                return ((Employee) pojo).getName().toLowerCase().indexOf(name.toLowerCase()) &gt;= 0;
+            }
+        };
+        List&lt;Employee&gt; results = allMatches(Employee.class, filter, false);
+        if (results.size() &gt; 20) {
+            throw new ApplicationException("More than 20 matches  -  please narrow search criteria");
+        }
+        return results;
+}</programlisting>
+
+      <para>Whereas the implementation for HOS in
+      <classname>HibernateEmployeeRepository</classname> uses a Hibernate
+      <classname>Query</classname> to perform the same function.</para>
+
+      <programlisting format="linespecific">public List&lt;Employee&gt; searchByName(String name) {
+        Query query = createEntityQuery("lower(o.name) like ?", Employee.class).setString(0, name + "%").setMaxResults(20);
+        List list = Arrays.asList(findByQuery(query, Employee.class));
+        return new ArrayList&lt;Employee&gt;(list);
+}</programlisting>
+
+      <para>HOS provides a class to simplify creating repositories,
+      <classname>org.nakedobjects.nos.store.hibernate.service.hibernate.service.H</classname>
+      <classname>ibernateFactoryAndRepository</classname>. These are based on
+      the standard <classname>AbstractFactoryAndRepository</classname> but
+      provide additional helper methods to find objects using a query string,
+      a Hibernate Query, or Hibernate Criteria. It also provides methods to
+      create a Hibernate Query or Criteria.</para>
+
+      <para>Useful methods are:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><literal moreinfo="none">find...()</literal> - there are a
+          multitude of <literal moreinfo="none">find()</literal>methods. Some
+          take a text query, others a Hibernate Query or Criteria (which can
+          be created by one of the following methods).</para>
+        </listitem>
+
+        <listitem>
+          <para><literal moreinfo="none">createCriteria(final Class
+          cls)</literal> - create a Hibernate Criteria for cls.</para>
+        </listitem>
+
+        <listitem>
+          <para><literal moreinfo="none">createEntityQuery(final String
+          whereClause, final Class cls)</literal> - create a Hibernate Query
+          for cls, with the specified where clause.</para>
+        </listitem>
+
+        <listitem>
+          <para><literal moreinfo="none">createCountQuery(final String
+          whereClause, final Class cls)</literal> - create a <literal
+          moreinfo="none">count(*)</literal> Hibernate Query for cls, with the
+          specified where clause. These queries should be executed directly,
+          or passed to <literal moreinfo="none">countNotZero(final Query
+          query)</literal> to check if the returned count is not zero.</para>
+        </listitem>
+
+        <listitem>
+          <para><literal moreinfo="none">createQuery(final String
+          query)</literal> - create a Hibernate Query from a complete query
+          string.</para>
+        </listitem>
+
+        <listitem>
+          <para><literal moreinfo="none">findFirst..()</literal> - follows the
+          same pattern as the <literal moreinfo="none">find()</literal>
+          methods, except it will only return the first object returned from
+          the query.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>When using Hibernate Queries or Criteria, they should first be
+      created using one of the <literal moreinfo="none">create()</literal>
+      methods, any parameters should be set, and then the populated Query or
+      Criteria can be passed to one of the <literal
+      moreinfo="none">find()</literal> methods to return the required
+      objects.</para>
+
+      <para><emphasis role="strong">Note:</emphasis> where Hibernate Queries
+      are created for the passed-in <literal moreinfo="none">cls</literal>
+      parameter, and only a where clause is specified, then the alias of the
+      object is <literal moreinfo="none">"o"</literal>, i.e. the generated
+      query starts <literal moreinfo="none">"from org.nakedobjects.ClassName
+      as o"</literal></para>
+
+      <para>If required, the Hibernate <classname>Session</classname> can also
+      be obtained by calling <literal moreinfo="none">getSession()</literal>,
+      which also ensures that there is an active transaction running. The
+      <classname>Session</classname> can then be used to create
+      <classname>Queries</classname> or <classname>Criteria</classname>, which
+      can then be passed to one of the <literal
+      moreinfo="none">find()</literal> methods. HOS will ensure the
+      transaction is committed at the end of the NOF transaction.</para>
+    </sect1>
+
+    <sect1>
+      <title>Coding requirements for domain objects</title>
+
+      <para>When coding with Hibernate there are a few rules to follow for
+      each domain class you wish to persist:</para>
+
+      <sect2>
+        <title>Provide a no-argument constructor</title>
+
+        <para>The HOS requires that there is a no-argument constructor for
+        each domain class. Java provides an implicit no-argument constructor,
+        unless you have implemented a constructor with arguments, in which
+        case you must provide an explicit no-argument constructor as well.
+        Note, however, that it is not considered good practice within Naked
+        Objects to use constructors at all - because objects created via
+        constructors are unknown to the application container. If you need to
+        create a new object within your application code, you should use the
+        <literal moreinfo="none">newTransientInstance()</literal> or <literal
+        moreinfo="none">newPersistentInstance()</literal>, which are provided
+        on the <classname>DomainObjectContainer</classname> or on
+        <classname>AbstractDomainObject</classname>.</para>
+      </sect2>
+
+      <sect2>
+        <title>Provide an identifier property (optional)</title>
+
+        <para>Hibernate requires an identifier property for each persistent
+        entity. If no identifier property is specified for an entity then the
+        HOS will generate one automatically, but it will be managed internally
+        within Naked Objects and not be visible either to users or to the
+        application programmer. If you wish to have programmatic access to the
+        identifier then you need to add an identifier property, which must be
+        called <emphasis role="strong">id</emphasis>.</para>
+      </sect2>
+
+      <sect2>
+        <title>Provide a title property (optional)</title>
+
+        <para>The HOS will automatically, persist the object's title, based on
+        the <literal moreinfo="none">title()</literal> method, or <literal
+        moreinfo="none">toString()</literal>, to enable searching by
+        title.</para>
+      </sect2>
+
+      <sect2>
+        <title>Prefer non-final classes</title>
+
+        <para>Final classes can't be lazy-loaded by Hibernate, so final
+        classes cause a performance overhead. (Refer to Hibernate
+        documentation for further information).</para>
+      </sect2>
+
+      <sect2>
+        <title>Declare accessors and mutators for persistent fields
+        (optional)</title>
+
+        <para>Within Naked Objects an accessor (or 'getter') is mandatory for
+        any field which is to be made available to the user, and a mutator
+        ('setter') is required, except for collections.</para>
+
+        <para>Hibernate recommends accessing ALL persistent fields (including
+        collections) using both an accessor and a mutator. When using HOS you
+        have two options:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>use <emphasis>field</emphasis> access by setting the
+            <methodname>nakedobjects.persistence.hibernate.valueFieldAccess</methodname>
+            and
+            <methodname>nakedobjects.persistence.hibernate.associationFieldAccess</methodname>
+            properties</para>
+          </listitem>
+
+          <listitem>
+            <para>create get() and set() methods for all persistent fields,
+            including collections. By following the Naked Objects coding style
+            you should already have these for all value and object properties
+            These methods may be private or protected.</para>
+          </listitem>
+        </itemizedlist>
+      </sect2>
+
+      <sect2>
+        <title>Avoid accessor/mutator pairs on interfaces when auto generating
+        mapping files.</title>
+
+        <para>The hibernate mapping generation code in Naked Objects may bring
+        interfaces into the mapping class hierarchy. If this happens it will
+        try to access any field identified by standard bean accessor/mutator
+        methods (i.e. get&lt;Field&gt; and set&lt;Field&gt;) on the interface.
+        Since this field does not exist on the interface this will cause an
+        error. Typically this won't happen as interfaces are not included in
+        the hierarchy - but it's best to avoid anyway as changes to the class
+        hierarchy may bring interfaces in, in a non-obvious way. Not having
+        both methods or renaming them will avoid this issue.</para>
+      </sect2>
+
+      <sect2>
+        <title>Collections</title>
+
+        <para>Collections must be declared using the interface type, e.g.
+        <literal moreinfo="none">java.util.List</literal> rather than a
+        concrete type such as <classname>java.util.ArrayList</classname>.
+        Currently <classname>List</classname> is the only supported collection
+        type within Naked Objects, however you may also use arrays.</para>
+      </sect2>
+
+      <sect2>
+        <title>Version and Modification properties (optional)</title>
+
+        <para>For every domain object, Naked Objects creates a version number,
+        as well as modified by user and time, and associates this with the
+        object internally. The HOS will create additional columns on the
+        database to hold this information, as needed by the framework. If you
+        wish to have this information explicitly accessible as properties on
+        your objects you need to add the following properties in <filename
+        class="directory"
+        moreinfo="none">hibernate.properties</filename>:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para><methodname>nakedobjects.persistence.hibernate.version</methodname>
+            for the name of the version number property. This must be a
+            java.lang.Long.</para>
+          </listitem>
+
+          <listitem>
+            <para><methodname>nakedobjects.persistence.hibernate.modified_by</methodname>
+            for the userid of the last person to modify an object. This should
+            be a string.</para>
+          </listitem>
+
+          <listitem>
+            <para><methodname>nakedobjects.persistence.hibernate.modified_on</methodname>
+            for the date the object was last updated. This should be a
+            java.util.Date</para>
+          </listitem>
+        </itemizedlist>
+
+        <para>Note: these are system wide values, so if you use this feature
+        you must use a consistent naming scheme across your objects.</para>
+
+        <para>Each of these values is optional. By default these properties
+        are accessed using the setting of
+        <methodname>nakedobjects.persistence.hibernate.valueFieldAccess</methodname>.
+        To specify a different access mechanism, each of these properties has
+        an associated <methodname>.access</methodname> property, for example
+        <methodname>nakedobjects.persistence.hibernate.version.access</methodname>.
+        This can be set to the Hibernate access type, namely <literal
+        moreinfo="none">field</literal>, <literal
+        moreinfo="none">property</literal> or <literal
+        moreinfo="none">ClassName</literal>.</para>
+      </sect2>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Running client-server</title>
+
+    <para></para>
+
+    <sect1>
+      <title>Specifying Hibernate for persistence</title>
+
+      <para>The above examples provide basic persistence via a file based
+      (XML) persistence layer. To use a persistence layer based on Hibernate a
+      small amount of configuration is required. First copy across the
+      Hibernate configuration file - <filename class="directory"
+      moreinfo="none">hibernate.cfg.xml</filename> - from the distribution's
+      resource directory. In its newly copied state this file specifies that
+      the database is HSQLDB, but it does contain other configurations that
+      can be uncommented so you can use other databases such as MySQL or
+      SQLServer.</para>
+
+      <screen format="linespecific">resources/
+   <emphasis role="strong">hibernate.cfg.xml</emphasis>
+   :</screen>
+
+      <para>The only other task is to list the classes that need to be mapped
+      to database tables so that object store can set up the database and
+      create the Hibernate mappings for you. This list need only name the root
+      objects as any reachable class will also be mapped. This can be added to
+      the <filename class="directory"
+      moreinfo="none">nakedobjects.properties</filename> file. Alternatively a
+      new file, <filename class="directory"
+      moreinfo="none">hibernate.properties</filename>, may be added to the
+      <filename class="directory" moreinfo="none">config</filename> directory,
+      which will only be loaded when the Hibernate persistor is used. The
+      following properties setting registers two classes that are to be
+      persisted using Hibernate.</para>
+
+      <programlisting format="linespecific">nakedobjects.persistence.hibernate.classes = example.dom.Contact, example.dom.PhoneNumber</programlisting>
+
+      <para>To run Naked Objects with the Hibernate persistor change the
+      persistor type to <emphasis role="strong">hibernate</emphasis> when
+      starting up Naked Objects. The following shows the integrated web server
+      from above being run with the Hibernate persistor.</para>
+
+      <screen format="linespecific">$ nakedobjects.sh --type server --viewer html <emphasis
+          role="strong">--persistor hibernate</emphasis>
+   </screen>
+
+      <para>During start up the Hibernate persistor will generate Hibernate
+      mapping files and add them to a newly created directory called <filename
+      class="directory" moreinfo="none">mappings</filename>. Assuming that you
+      used the default configuration in <filename class="directory"
+      moreinfo="none">hibernate.cfg.xml</filename> the HSQLDB engine will be
+      used and a directory, <filename class="directory"
+      moreinfo="none">hsql</filename>, will be created to contain the files.
+      For more information see <link endlink="">Working with the Hibernate
+      Object Store. </link></para>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Recognised Methods (Prior to Java 1.5)</title>
+
+    <para>If you are not using Java 1.5 then the methods in this section can
+    be used instead of the annotations described in the next section. Note
+    that not all annotations have a non-Java-1.5 equivalent.</para>
+
+    <sect1>
+      <title>singularName</title>
+    </sect1>
+
+    <sect1>
+      <title>pluralName</title>
+    </sect1>
+
+    <sect1>
+      <title>markDirty</title>
+    </sect1>
+
+    <sect1>
+      <title>clearDirty</title>
+    </sect1>
+
+    <sect1>
+      <title>isDirty</title>
+    </sect1>
+
+    <sect1>
+      <title>optional</title>
+    </sect1>
+
+    <sect1>
+      <title>Field order</title>
+
+      <para>An order for the fields can specified via a method with the field
+      order method.</para>
+
+      <programlisting format="linespecific">public static String fieldOrder()</programlisting>
+
+      <para>The method should return a comma separated list of field names
+      (which are case and space insensitive) with the names listed in the
+      order they should be used.</para>
+    </sect1>
+
+    <sect1>
+      <title>Action order</title>
+
+      <para>An order for the action can specified via a method with the action
+      order method.</para>
+
+      <programlisting format="linespecific">public static String actionOrder()</programlisting>
+
+      <para>The method should return a comma separated list of action names
+      (which are case and space insensitive) with the names listed in the
+      order they should be used. Actions can be grouped together by
+      surrounding the group with brackets ('(' and ')') and prefixing the
+      group with name and colon, e.g. "(group name: first name, second name,
+      etc)".</para>
+    </sect1>
+
+    <sect1>
+      <title>Descriptive controls</title>
+
+      <para>Field and action names are normally derived from the name of the
+      method, but this can be changed. Also descriptions and help text can be
+      provided from within the domain classes. The following signatures are
+      recognised and used to get a name, description or help text for fields
+      or actions.</para>
+
+      <programlisting format="linespecific">public static String name&lt;fieldName&gt;([&lt;field type&gt; param])
+public static String description&lt;fieldName&gt;([&lt;field type&gt; param])
+public static String help&lt;fieldName&gt;([&lt;field type&gt; param])
+
+public static String name&lt;actionName&gt;([&lt;parameter type&gt; param]...)
+public static String description&lt;actionName&gt;([&lt;parameter type&gt; param]...)
+public static String help&lt;actionName&gt;([&lt;parameter type&gt; param]...)</programlisting>
+
+      <para>The parameters in an action can be labeled as a complete
+      set.</para>
+
+      <programlisting format="linespecific">public static String[] names&lt;actionName&gt;([&lt;parameter type&gt; param]...)</programlisting>
+    </sect1>
+
+    <sect1>
+      <title>Static controls</title>
+
+      <para>Specific fields can be hidden from the user; they are deemed to be
+      internal to the object.</para>
+
+      <programlisting format="linespecific">public static boolean alwaysHide&lt;fieldName&gt;([&lt;field type&gt; param])</programlisting>
+
+      <para>Fields and action parameters can be flagged as required, so that
+      the object is not valid, or the action cannot be invoked until the
+      field/parameters are set.</para>
+
+      <programlisting format="linespecific">public static boolean optional&lt;fieldName&gt;(&lt;field type&gt; param)
+
+public static boolean[] optional&lt;actionName&gt;([&lt;parameter type&gt; param]...)</programlisting>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Value Objects</title>
+
+    <sect1>
+      <title>Temporal</title>
+
+      <javadoc class="Date" comments="yes" outline="yes" package="???">
+        <includes class="Magnitude" />
+      </javadoc>
+
+      <javadoc class="Time" comments="yes" outline="yes" package="???">
+        <includes class="Magnitude" />
+      </javadoc>
+
+      <javadoc class="DateTime" comments="yes" outline="yes" package="???">
+        <includes class="Magnitude" />
+      </javadoc>
+
+      <javadoc class="TimeStamp" comments="yes" outline="yes" package="???">
+        <includes class="Magnitude" />
+      </javadoc>
+    </sect1>
+
+    <sect1>
+      <title>Financial</title>
+
+      <javadoc class="Money" comments="yes" outline="yes" package="???">
+        <includes class="Magnitude" />
+      </javadoc>
+    </sect1>
+
+    <sect1>
+      <title>Security</title>
+
+      <javadoc class="Password" comments="yes" outline="yes" package="???" />
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Helper classes</title>
+
+    <sect1>
+      <title>Application container</title>
+
+      <javadoc class="DomainObjectContainer" comments="yes" outline="no"
+               package="???" />
+    </sect1>
+
+    <sect1>
+      <title>Domain objects</title>
+
+      <javadoc class="AbstractDomainObject" comments="yes" outline="no"
+               package="???">
+        <includes class="AbstractContainedObject" />
+      </javadoc>
+    </sect1>
+
+    <sect1>
+      <title>Title creation</title>
+
+      <javadoc class="TitleBuffer" comments="yes" outline="no" package="???" />
+    </sect1>
+
+    <sect1>
+      <title>Reason text creation</title>
+
+      <javadoc class="ReasonBuffer" comments="yes" outline="yes" package="???" />
+    </sect1>
+
+    <sect1>
+      <title>User details</title>
+
+      <sect2>
+        <title>UserMemento</title>
+
+        <javadoc class="UserMemento" comments="yes" outline="yes"
+                 package="???" />
+      </sect2>
+
+      <sect2>
+        <title>RoleMemento</title>
+
+        <javadoc class="RoleMemento" comments="yes" outline="yes"
+                 package="???" />
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>Fixtures</title>
+
+      <sect2>
+        <title>Fixtures</title>
+
+        <javadoc class="AbstractFixture" comments="yes" outline="yes"
+                 package="???" />
+
+        <javadoc class="FixtureClock" comments="yes" outline="yes"
+                 package="???" />
+
+        <javadoc class="FixtureServices" comments="yes" outline="yes"
+                 package="???" />
+
+        <javadoc class="FixtureFactoryAndRepository" comments="yes"
+                 outline="yes" package="???" />
+
+        <javadoc class="Clock" comments="yes" outline="yes" package="???" />
+      </sect2>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Ant build.xml Template</title>
+
+    <programlisting format="linespecific">&lt;?xml version="1.0"?&gt;
+
+&lt;project name="Naked Object Example" default="dnd" basedir="."&gt;
+    &lt;property name="lib.dir" value="../../lib" /&gt;
+    &lt;property name="resource.dir" value="../../resources" /&gt;
+    &lt;property name="build.dir" value="./build" /&gt;
+    &lt;property name="dist.dir" value="./dist" /&gt;
+    &lt;property name="classes.dir" value="./build/classes" /&gt;
+    &lt;property name="war.dir" value="${build.dir}/war" /&gt;
+    &lt;property name="src.dir" value="/src/" /&gt;
+    &lt;property name="compile.target" value="1.5" /&gt;
+    &lt;property name="source.target" value="1.5" /&gt;
+    &lt;property name="bootclass" value="org.nakedobjects.nof.boot.NakedObjects" /&gt;
+    &lt;property name="application.name" value="no-application" /&gt;
+
+    &lt;target name="clean"&gt;
+        &lt;delete dir="${build.dir}" failonerror="false" /&gt;
+        &lt;delete dir="${dist.dir}" failonerror="false" /&gt;
+    &lt;/target&gt;
+
+    &lt;fileset dir="${lib.dir}" id="libs.set"&gt;
+        &lt;include name="**/*.jar" /&gt;
+    &lt;/fileset&gt;
+
+    &lt;path id="libs.path"&gt;
+        &lt;fileset refid="libs.set" /&gt;
+    &lt;/path&gt;
+
+    &lt;import file="./packages.xml" /&gt;
+
+    &lt;target name="compile" description="Compile example"&gt;
+        &lt;mkdir dir="${build.dir}" /&gt;
+        &lt;mkdir dir="${classes.dir}" /&gt;
+
+        &lt;javac destdir="${classes.dir}" target="${compile.target}" source="${source.target}"&gt;
+            &lt;src refid="source.path" /&gt;
+            &lt;classpath refid="libs.path" /&gt;
+        &lt;/javac&gt;
+    &lt;/target&gt;
+
+    &lt;target name="dist" depends="compile" description="Collects together files for distribution"&gt;
+        &lt;copy todir="${build.dir}/lib"&gt;
+            &lt;fileset refid="libs.set" /&gt;
+        &lt;/copy&gt;
+        &lt;mkdir dir="${build.dir}/images" /&gt;
+        &lt;copy todir="${build.dir}"&gt;
+            &lt;fileset dir="."&gt;
+                &lt;include name="config/*" /&gt;
+                &lt;include name="resources/*" /&gt;
+                &lt;include name="images/*" /&gt;
+            &lt;/fileset&gt;
+            &lt;fileset dir="${resource.dir}"&gt;
+                &lt;include name="web/*" /&gt;
+                &lt;include name="nakedobjects.*" /&gt;
+                &lt;include name="lcp.bat" /&gt;
+            &lt;/fileset&gt;
+        &lt;/copy&gt;
+        &lt;chmod file="${build.dir}/nakedobjects.sh" perm="ugo+x" /&gt;
+
+        &lt;mkdir dir="${dist.dir}" /&gt;
+        &lt;zip destfile="${dist.dir}/${application.name}.zip"&gt;
+            &lt;zipfileset dir="${build.dir}" prefix="${application.name}"&gt;
+                &lt;exclude name="nakedobjects.sh" /&gt;
+            &lt;/zipfileset&gt;
+            &lt;zipfileset dir="${build.dir}" filemode="755" prefix="${application.name}"&gt;
+                &lt;include name="nakedobjects.sh" /&gt;
+            &lt;/zipfileset&gt;
+        &lt;/zip&gt;
+    &lt;/target&gt;
+
+    &lt;target name="exploration-dnd" depends="compile" description="Explore example using drag-and-drop graphical viewer"&gt;
+        &lt;java fork="yes" classname="${bootclass}"&gt;
+            &lt;classpath path="${classes.dir}" /&gt;
+            &lt;classpath refid="libs.path" /&gt;
+            &lt;classpath path="resources" /&gt;
+            &lt;arg line="--type exploration --viewer dnd" /&gt;
+        &lt;/java&gt;
+    &lt;/target&gt;
+
+    &lt;target name="exploration-web" depends="compile" description="Explore example using command-line viewer"&gt;
+        &lt;java fork="yes" classname="${bootclass}"&gt;
+            &lt;classpath path="${classes.dir}" /&gt;
+            &lt;classpath refid="libs.path" /&gt;
+            &lt;classpath path="resources" /&gt;
+            &lt;arg line="--type exploration --viewer html" /&gt;
+        &lt;/java&gt;
+    &lt;/target&gt;
+
+    &lt;target name="dnd" depends="compile" description="Run example using drag and drop viewer"&gt;
+        &lt;java fork="yes" classname="${bootclass}"&gt;
+            &lt;classpath path="${classes.dir}" /&gt;
+            &lt;classpath refid="libs.path" /&gt;
+            &lt;classpath path="resources" /&gt;
+            &lt;arg line="--type prototype --viewer dnd" /&gt;
+        &lt;/java&gt;
+    &lt;/target&gt;
+
+    &lt;target name="html" depends="compile" description="Run example using web viewer"&gt;
+        &lt;java fork="yes" classname="${bootclass}"&gt;
+            &lt;classpath path="${classes.dir}" /&gt;
+            &lt;classpath refid="libs.path" /&gt;
+            &lt;classpath path="resources" /&gt;
+            &lt;arg line="--type prototype --viewer html" /&gt;
+        &lt;/java&gt;
+    &lt;/target&gt;
+
+    &lt;target name="standalone-xml" depends="compile" description="Run standalone with xml persistence"&gt;
+        &lt;java fork="yes" classname="${bootclass}"&gt;
+            &lt;classpath path="${classes.dir}" /&gt;
+            &lt;classpath refid="libs.path" /&gt;
+            &lt;classpath path="resources" /&gt;
+            &lt;arg line="--type standalone --viewer dnd --persistor xml" /&gt;
+        &lt;/java&gt;
+    &lt;/target&gt;
+
+    &lt;target name="standalone-hibernate" depends="compile" description="Run standalone with hibernate persistence"&gt;
+        &lt;java fork="yes" classname="${bootclass}"&gt;
+            &lt;classpath path="${classes.dir}" /&gt;
+            &lt;classpath refid="libs.path" /&gt;
+            &lt;classpath path="resources" /&gt;
+            &lt;arg line="--type standalone --viewer dnd --persistor hibernate" /&gt;
+        &lt;/java&gt;
+    &lt;/target&gt;
+
+&lt;/project&gt;</programlisting>
+  </chapter>
+
+  <chapter>
+    <title>Configuration</title>
+
+    <para></para>
+
+    <sect1>
+      <title>Hibernate Object Store Properties</title>
+
+      <para>The behaviour of the Hibernate Object Store can be tailored using
+      properties as detailed below. All properties have a common root of
+      <methodname>nakedobjects.persistence.hibernate</methodname>.</para>
+
+      <para>By default, when running with command line option <literal
+      moreinfo="none">-r hibernate</literal> properties are loaded from
+      configuration <emphasis role="strong">nakedobjects.properties,
+      hibernate.properties</emphasis> and <emphasis
+      role="strong">logging.properties</emphasis> which are located on the
+      classpath. All examples are given using standard Java.</para>
+
+      <sect2>
+        <title>Automatic mapping</title>
+
+        <para>To automatically map Naked Objects as persistent Hibernate
+        entities <methodname>auto</methodname> property must be set.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.auto = true</programlisting>
+
+        <para>Once generated the mapping files will be reused each time the
+        application is started unless the <methodname>regenerate</methodname>
+        property is set. Which will force the mapping files to be regenerated
+        each time</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.regenerate = true</programlisting>
+
+        <para>Mapping files are written and read from the location (under the
+        application root) given in the <methodname>hbm-export</methodname>
+        property.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.hbm-export = mappings</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Specifying mapped persistent classes</title>
+
+        <para>The list of persistent classes which will be automatically
+        mapped is specified by the <methodname>classes</methodname> property.
+        Any related entity classes in each class's hierarchy will be
+        automatically picked up as necessary, however it is preferred to
+        explicitly list all persistent classes.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.classes = \
+    org.nakedobjects.object.application.BasicApplicationContext \
+  , org.nakedobjects.object.application.SimpleUser \
+  , org.nakedobjects.example.ecs.Customer \
+  , org.nakedobjects.example.ecs.Location \
+  , org.nakedobjects.example.ecs.City
+  , org.nakedobjects.example.ecs.Telephone \
+  , org.nakedobjects.example.ecs.CreditCard \
+  , org.nakedobjects.example.ecs.resources.ReferenceGenerator</programlisting>
+
+        <para>As a shortcut you can specify the prefix for all classes listed
+        in the <methodname>classes</methodname> property using
+        <methodname>classes.prefix</methodname>.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.classes.prefix = \
+  org.nakedobjects.example.ecs
+nakedobjects.persistence.hibernate.classes = Customer, Location \
+    , City, Telephone, CreditCard, resources.ReferenceGenerator</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Checking if the Object Store is initialized</title>
+
+        <para>Fixtures are run, and the database tables created, only when an
+        Object Store is not initialized. By default the HOS is defined to be
+        initialized if any of the mapped tables exists, with the specific
+        table selected at random from the classes mapped to the
+        database.</para>
+
+        <para>This behaviour can be overridden is several ways.</para>
+
+        <para>To explicitly specify if the HOS is initialized set the
+        <methodname>initialized</methodname> property.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.initialized = false</programlisting>
+
+        <para>To allow the Object Store to determine if it is initialized by
+        checking the existence of a specific table then you can specify the
+        catalog, schema and table using the
+        <methodname>initialized.catalog</methodname>,
+        <methodname>initialized.schema</methodname> and
+        <methodname>initialized.table</methodname> properties. Depending on
+        your database, only <methodname>initialized.table</methodname> is
+        required.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.schema = MYSCHEMA
+nakedobjects.persistence.hibernate.table = MYTABLE</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Creating database tables</title>
+
+        <para>Hibernate contains tools which can be used to create the
+        database schema. If the Object Store is not initialized (see above),
+        and the <methodname>schema-export</methodname> property is set, then
+        the database tables are created automatically using the Hibernate
+        <literal moreinfo="none">SchemaExport</literal> tool.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.schema-export = true</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Updating the database schema</title>
+
+        <para>If the HOS is initialized (see above) the database schema can be
+        updated automatically to keep in line with any changes to the domain
+        model. This functionality is used the Hibernate <literal
+        moreinfo="none">SchemaUpdate</literal> tool, and is specified by
+        setting the <methodname>schema-update</methodname> property. Current
+        limitations of this tool should be checked from Hibernate
+        documentation.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.schema-update = true</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Save/update/delete behaviour</title>
+
+        <para>Within NOF, save, update and delete requests are stored within a
+        NOF transaction, and only submitted to the database at the end of the
+        NOF transaction. This can obviously cause issues, for example when
+        looking up an object in the database that was saved during the same
+        session. Therefore, by default the Hibernate Object Store executes
+        save/update/deletes as necessary (typically triggered by queries). To
+        revert to normal NOF behaviour set the
+        <methodname>saveImmediate</methodname> property to
+        <emphasis>false</emphasis>.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.saveImmediate = false</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Database shutdown</title>
+
+        <para>Some databases require certain routines to be run when the
+        application shuts down. To specify that this occurs set the
+        <methodname>shutdown</methodname> property to
+        <emphasis>true</emphasis>.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.shutdown = true</programlisting>
+
+        <para>At Naked Objects shutdown, this has the following effects for
+        the specified databases:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para><emphasis>Apache Derby</emphasis>: calls
+            <methodname>DriverManager.getConnection("jdbc:derby:;shutdown=true");</methodname>
+            to shutdown the database correctly.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>HSQLDB</emphasis>: runs the <literal
+            moreinfo="none">SHUTDOWN COMPACT</literal> SQL command to
+            correctly organise and compact the database.</para>
+          </listitem>
+        </itemizedlist>
+      </sect2>
+
+      <sect2>
+        <title>List behaviour</title>
+
+        <para>By default any persistent collections of type
+        <classname>java.util.List</classname> are mapped using Hibernate bag
+        semantics, that is to say that list order is not preserved. In order
+        to change behaviour set the <methodname>list</methodname> property to
+        <emphasis>list</emphasis>. This will change the mapping to use
+        Hibernate list semantics, and will generate a
+        <emphasis>position</emphasis> column on the database. The default
+        setting is <emphasis>bag</emphasis>.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.list = list</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Collection behaviour</title>
+
+        <para>By default persistent collections are modelled using a
+        one-to-many association. Hibernate maps this type of association by
+        linking the tables of two classes via a foreign key, with no
+        intervening collection table. Hibernate can also map collections as
+        many-to-many associations, which requires a dedicated collection
+        table. In order to map collections using many-to-many associations set
+        the <methodname>collections</methodname> property to
+        <emphasis>many</emphasis>. The default setting is
+        <emphasis>one</emphasis>.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.collections = many</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Property or field access</title>
+
+        <para>Hibernate has alternative strategies for accessing properties of
+        persistent entities. By default all properties are accessed using
+        Hibernate's <emphasis>property</emphasis> access method, that is to
+        say via <methodname>get()</methodname> and
+        <methodname>set()</methodname> methods. In a Naked Objects system,
+        when Hibernate loads or saves an object this will mean getters will
+        call <methodname>resolve()</methodname> and setters
+        <methodname>objectChanged()</methodname>. The Hibernate Object Store
+        will ignore these calls, but obviously this does cause some overhead.
+        In order to access the fields directly, and so bypass the getters and
+        setters, Hibernate also provides a <emphasis>field</emphasis> access
+        method. There are two properties to use, set
+        <methodname>valueFieldAccess</methodname> for Hibernate to access
+        values and relationships to single objects directly, and
+        <methodname>associationFieldAccess</methodname> for Hibernate to
+        access collections directly.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.valueFieldAccess = true
+nakedobjects.persistence.hibernate.associationFieldAccess = true</programlisting>
+
+        <para>Note: if you set either of these properties then you must ensure
+        that the field names in your object match the property names, i.e.
+        <literal moreinfo="none">String xxx;</literal> and
+        <methodname>getXxx()</methodname>. If all fields have a specific
+        prefix you can set it using the <methodname>fieldPrefix</methodname>
+        property. So, if in the above example the field was actually <literal
+        moreinfo="none">String _xxx;</literal> the setting would be</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.fieldPrefix = _</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Bidirectional associations</title>
+
+        <para>You can tell the Hibernate Object Store to assume that a
+        bidirectional relationship between two Naked Objects, that is where
+        the association can be navigated in both directions, should be mapped
+        as a bidirectional Hibernate association. This will only occur in the
+        following circumstances: for Naked Objects A and B, A must have one
+        and only one association to B, and B have one and only one association
+        to A.</para>
+
+        <para>By setting property <methodname>assumeBidirectional</methodname>
+        entities will be mapped using <literal
+        moreinfo="none">inverse="true"</literal> in Hibernate terms.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.assumeBidirectional = true</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Changing column names</title>
+
+        <para>By default properties are mapped to columns of the same name.
+        This may cause database errors if properties have the same name as a
+        database reserved word (although the mapping code will attempt to
+        preempt collisions by renaming columns that have the same name as a
+        database keyword), or you may simply wish to map a property to a
+        different column. To change the column name for a particular property
+        name set the <methodname>column.&lt;property-name&gt;</methodname>
+        property to the column name, for example <literal
+        moreinfo="none">temporary</literal> is a reserved word in the Derby
+        database, so to map this to a column called temp use the
+        following:</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.column.temporary = temp</programlisting>
+
+        <para>When the naked object identifies database keyword collisions in
+        database table and column names it will append a suffix. By default
+        this is '_TABLE' and '_column' respectively but this can be controlled
+        by properties as follows.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.reservedColumnNameSuffix = _TABLE
+nakedobjects.persistence.hibernate.reservedTableNameSuffix = _column</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Version and modified information</title>
+
+        <para>NOF holds version and modification information externally to an
+        object. This is especially important for client-server set ups.
+        However, using HOS it is also possible to hold this information as
+        properties of a Naked Object. To specify which properties match the
+        NOF version/modified data you can specify 3 properties, whose values
+        are the property names on your object:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para><methodname>version</methodname> for version number. This
+            must be a java.lang.Long.</para>
+          </listitem>
+
+          <listitem>
+            <para><methodname>modified_by</methodname> for the userid of the
+            last person to modify an object. This should be a string.</para>
+          </listitem>
+
+          <listitem>
+            <para><methodname>modified_on</methodname> for the date the object
+            was last updated. This should be a java.util.Date</para>
+          </listitem>
+        </itemizedlist>
+
+        <para>Note: these are system wide values, so to use this feature you
+        must use a consistent naming scheme across your objects. By default
+        these properties are accessed using the setting of
+        <methodname>valueFieldAccess</methodname> above. To specify a
+        different access mechanism, each of these properties has an associated
+        <methodname>.access</methodname> property, for example
+        <methodname>version.access</methodname>. This can be set to the
+        Hibernate access type, namely <literal
+        moreinfo="none">field</literal>, <literal
+        moreinfo="none">property</literal> or <literal
+        moreinfo="none">ClassName</literal>.</para>
+
+        <programlisting format="linespecific">nakedobjects.persistence.hibernate.modified_on = lastUpdated
+nakedobjects.persistence.hibernate.modified_on.access = property</programlisting>
+      </sect2>
+    </sect1>
+  </chapter>
+</book>

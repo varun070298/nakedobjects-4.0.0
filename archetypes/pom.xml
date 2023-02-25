@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+	<name>Archetypes</name>
+    <groupId>org.nakedobjects.archetypes</groupId>
+	<artifactId>archetypes</artifactId>
+    <version>4.0</version>
+    <packaging>pom</packaging>
+
+	<parent>
+	    <groupId>org.nakedobjects</groupId>
+	    <artifactId>nakedobjects-parent</artifactId>
+        <version>5</version>
+    </parent>
+
+   <scm>
+        <connection>scm:svn:http://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/trunk/archetypes</connection>
+        <developerConnection>scm:svn:https://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/trunk/archetypes</developerConnection>
+        <url>http://development.nakedobjects.org/trac/browser/framework/trunk/archetypes</url>
+    </scm>
+
+    <modules>
+    	<!-- 
+    	the 'application' module is intentionally not referenced; 
+    	it should be released separately after the main release.
+    	-->
+        <module>hibernate-support</module>
+    </modules>
+</project>

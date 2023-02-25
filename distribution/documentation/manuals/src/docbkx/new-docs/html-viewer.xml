@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter>
+  <title>HTML Viewer</title>
+
+  <section>
+    <title></title>
+
+    <para></para>
+
+    <para></para>
+
+    <para>To turn on debuging use the debugon command, e.g.,</para>
+
+    <programlisting>http://localhost:8080/debugon.app</programlisting>
+
+    <para>A control bar appears a the bottom of the page allowing you to
+    display the object graph, specification, connection details and so on. To
+    turn it off use the debugoff command:</para>
+
+    <programlisting>http://localhost:8080/debugoff.app</programlisting>
+
+    <para>The debug pages can be displayed directly by providing the commands:
+    debug; spec and dump - along with a object id if necessary. For example to
+    view the details about the specification for object 28 use:</para>
+
+    <programlisting>http://localhost:8080/spec.app?id=28</programlisting>
+  </section>
+</chapter>

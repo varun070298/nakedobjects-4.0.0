@@ -1,0 +1,158 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <name>Documentation Examples</name>
+    <groupId>org.nakedobjects.distribution</groupId>
+    <artifactId>documentation-examples</artifactId>
+    <packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.nakedobjects</groupId>
+		<artifactId>distribution</artifactId>
+		<version>4.0.0</version>
+	</parent>
+
+    <build>
+        <plugins>
+        
+           <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <showDeprecation>false</showDeprecation>
+                    <showWarnings>false</showWarnings>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+        
+            <plugin>
+               <groupId>org.nakedobjects.maven</groupId>
+	           <artifactId>code-example-plugin</artifactId>
+               <version>0.1</version>
+               <executions>
+                   <execution>
+                        <phase>package</phase>
+                       <goals>
+                            <goal>extract</goal>                           
+                       </goals>
+                        <configuration>
+                            <outputDirectory>../manuals/src/docbkx/extracts</outputDirectory>
+                        </configuration>
+                   </execution>
+               </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <doclet>org.nakedobjects.doclet.xml.XmlDoclet</doclet>
+                    <docletArtifact>
+                        <groupId>org.nakedobjects.maven</groupId>
+                        <artifactId>xmldoclet</artifactId>
+                        <version>0.1</version>
+                    </docletArtifact>
+                    <!--
+                    <executions>
+                       <execution>
+                            <phase>package</phase>
+                           <goals>
+                                <goal>javadoc:javadoc</goal>                           
+                           </goals>
+                       </execution>
+                    </executions>
+                    -->
+                </configuration>
+            </plugin>
+<!--
+          <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>copy-resources</id>
+                <!- - here the phase you need - ->
+                <phase>validate</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+Search:
+
+    * Login
+    * Help/Guide
+    * About Trac
+    * Preferences
+
+    * Wiki
+    * Timeline
+    * Roadmap
+    * Browse Source
+    * View Tickets
+    * Search
+
+Context Navigation
+
+    * ← Previous Changeset
+    * Next Changeset →
+
+Changeset 13739
+
+                <configuration>
+                  <outputDirectory>${basedir}/target/extra-resources</outputDirectory>
+                  <resources>          
+                    <resource>
+                      <directory>src/non-packaged-resources</directory>
+                      <filtering>true</filtering>
+                    </resource>
+                  </resources>              
+                </configuration>            
+              </execution>
+            </executions>
+          </plugin>
+-->
+
+        </plugins>
+    </build>
+<!-- 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                
+                <configuration>
+                    <aggregate>false</aggregate>
+                    
+                
+                    <doclet>org.nakedobjects.doclet.xml.XmlDoclet</doclet>
+                    <docletArtifact>
+                        <groupId>org.nakedobjects</groupId>
+                        <artifactId>xmldoclet</artifactId>
+                        <version>1.0-SNAPSHOT</version>
+                    </docletArtifact>
+                    
+                </configuration> 
+            </plugin>        
+        </plugins>
+    </reporting>
+ -->
+
+	<dependencies>
+		<dependency>
+			<groupId>org.nakedobjects.plugins</groupId>
+			<artifactId>dnd-viewer</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nakedobjects.plugins</groupId>
+			<artifactId>xml-persistor</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.7</version>
+		</dependency>
+	</dependencies>
+
+</project>

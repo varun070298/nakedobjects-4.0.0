@@ -1,0 +1,218 @@
+Release Notes
+
+Version 4.0 - released 10th August 2009
+
+* Architectural redesign
+
+* Only minor changes to programming model meaning existing applications can be easily upgraded
+
+* New Value type allowing you to define new value such as URL,  email address, temperature, geocode
+
+* Runnable in the Naked Objects container, a Web container, or standalone via Jetty
+
+* Facet based meta-model allows the reflector to be adapted, allowing for control over how the domain objects are used
+
+* Moving toward an extensible architecture
+
+* HTTP Remoting
+
+* Defined a component architecture allow viewers, persistors, remoting and security mechanisms etc. to be swapped in and out at runtime
+
+* Provides a Maven archetype to create new projects
+
+* Other plugins/components such as JPA object store, Scimpi web interface, RESTful interface, FitNesse testing either bundled with distribution, or available via Maven
+
+* Improved DND UI, with more views – grid, calendar, histogram – and better feedback, with  stylable windows, buttons etc.
+
+* Perspective have been replaced with user profiles, which are more comprehensive and are stored separately from the domain objects
+
+* Headless viewer for applying business logic between pojos
+
+* Ability to embed headless Naked Objects in other systems
+
+* Now uses bytecode enhancement so no need to call resolve/objectChanged()
+
+* Junit4 runner for testing Naked Objects applications (utilizes Headless viewer) 
+
+
+
+Version 3.0  - released 1st October 2007 
+
+* Provides a command line based startup mechanism.
+ 
+* HTML browser user interface. Runs with embedded Jetty 6 server, as a standalone web server, or as a web app in containers such as Tomcat.
+
+4. Reflector can now be extended. Value classes can now be subclassed.The adapter factory will create an adapter
+   for the values parent type.
+
+5. Java 1.5 extension for reflector to use annotations and generics
+	- Added new annotations from 1.5 programming model
+	- Masks and regular expressions on value fields
+	- Added value annotations for lengths and multiline
+	- Markers for invisibility.
+	- Resources can now be named with the @Named annotation
+	- SingularName annotation is now Named (as for fields and parameters), and PluralName has been shortened to Plural.
+	- Allowing collection element types to be picked up from annotation or from generics type.
+	- Clear and modify are now used instead of associate and dissociate; clear now works on value fields.	
+	- Value objects should now be null when they are cleared.
+
+
+6. Services (was Resources). Replaced references to Resources with Services. Reworked the services mechanism so that they
+   are just POJOS that are registered as services(rather than being of a specific type).
+   The domain container now has the ability to create new instances. Provided a generic factory and repository with
+   implementation in the application library. Added abstract superclass for all classes that provide access to 
+   the container.  Also added an abstract class for services. Consolidated duplicated PatternCritieria classes 
+   in repositories. Make HibernateFactoryAndRepository inherit from AbstractFactoryAndRepository. So that hibernate
+   and custom implementations are consistent.
+    
+
+7. Resource methods are now available from object that can be used when calling those methods, or from field or
+   collection that can take an object of that type. Actions from resources (for a particular type of object) are
+   now grouped by resource.
+
+8. Improved and reorganised the authentication process. Modified servlet to create session when user authenticates
+   via web server. User and roles available via the container in the application library. Moved reflective
+   security peers to reflector. Updated session to include roles.
+
+9. Refactoring remoting subsystem. Componetizedcommand based distribution so different transports can be used.
+   Provided an alternative transport mode using Java serialisation (alongside XStream).
+
+10. Extracted Perspective from the framework, to be placed in the domain code layer so that applications can defined them.
+    Made Perspective a concrete class within the NOF with its own specification.  Removed the basic specification
+    loader (InternalSpecificationLoader) that duplicated a lot of the Java reflector. Perspective now being provided 
+    by context for a user. Allow a number of perspectives to be defined in fixtures (from different users/applications).
+    Perspectives are now being found for the user that has logged in, and if no perspective exists for that user then a 
+    new one is created. 
+
+
+
+Version 3.0 Milestone 2 - 11th November 2006
+
+1. Enhanced Command Line Viewer.
+
+2. Improved .NET version - .NET Types are used instead of J# classes, images
+   are loaded from assemblies, use of App.config file instead of .properties.
+
+3. Object Stores no longer have a setup step, but implement the new
+   isInitialized() method.
+
+4. Properties file for Hibernate Object Store renamed to hos.properties (from
+   hosos.properties)
+
+5. Add Hibernate specific factory and repository classes.
+
+
+
+Version 3.0 Milestone 1  9th September, 2006
+
+    Version 3.0 is set to be a complete system that integrates with existing 
+    enterprise resources such as database, application servers and security
+    systems.
+    
+1. Completely POJO reflector.
+
+2. Hibernate object store.
+
+3. Use of respositories, factories and services, instead of class methods, hence
+    these 'resources' now form the basis of the desktop instead of the classes.
+
+4. Distribution is temporarily broken by the above change to resources.
+
+5. A manual is now included with the distribution.
+
+6.  Additional examples have be added.
+
+
+
+Version 3.0 Milestone 1 (Preview)
+
+    This release is a preview of the work going on in version 3.0 of the NOF.
+    Specifically it now has a command line interface for visually impaired users,
+    and the programming model has been simplified to make it independent of the
+    framework.  Details on both these can be found in the reference section of the
+    manual.
+
+
+1. Added command line interface
+
+2. Changed persistence and distribution systems to work with naked objects 
+    that always have an OID even when transient; allowing client and server to 
+    share transient object graphs.
+
+3. Revised the start-up classes.  These can now be used across different 
+    application, using configuration files rather than being hard coded.  Classes 
+    are provided to start up the main components - reflector, persistor, viewer - 
+    and complete applications - exploration, standalone, server client etc.
+
+4. Java reflector will now provide the container to static method that declare 
+    the container as their first parameter.
+
+5. XML connection will reconnect if connection lost; allows server to be restarted.
+
+6. XML Object Store now stores a revision number for each persisted object.
+
+7. A mechanism is now available for a user to log-in using a user name/
+    password combination.  This creates a Session object.
+
+8. Completed the application framework: extended the abouts/info to deal with 
+    instance and class hints; converted value holders to value objects.
+
+9. Extended reflector.
+
+10. Reflector now makes available all public methods, not just those prefixed by 
+    'action'.  Unwanted methods can be hidden in the same way that fields can.
+
+11. Application and classes are now represented by POJOs so they can be
+    persisted.
+
+12. Single About methods replaced by fine-grained methods to control the
+    domain objects - supporting visibility, edit-ability etc of fields and
+    actions through individual methods.
+
+
+Version 2.0 28th June 2006
+
+    Milestone 6 released as final release of version 2.0.
+
+
+Milestone 6 - M6 22nd March 2006
+
+1. Revised laying out of views; removed the space not used by scroll bars when they 
+    are not needed.
+
+2. An objects fields/properties are no longer cleared when the ObjectStorePersistor is 
+    asked to destroy an object.
+
+3. Reorganised Eclipse projects and Subversion repository so a new build can be 
+    performed directly after a checkout (assuming Ant is installed and Junit can be seen). 
+    Also can be imported directly into Eclipse.
+
+4. Added image value type and field view.
+
+5. Revised the table view design so columns and headers are consistent.
+
+6. Windows are now minimised to the bottom of the workspace.  Can also drag out the 
+    object from the minimised view or drop other objects onto it.
+
+7. Lazily loaded collections are cleared and their resolved state  is reset to GHOST when 
+    no data is received for the collection in updates from the server.
+
+8. The reflection peers are now asked for help text alongside the existing name and 
+    description.
+
+9. Debug options are now brought up using shift key; exploration options using control.  
+    This allows the debug menu to be accessed during a WebEx support session.
+
+10. The generic reload option has been removed.  If an object needs reloading then the 
+    BOM code needs to ensure this.
+
+11. A help viewer can now be specified allowing an external help system to be incorporated.
+
+12. Improved debug details to show information from the reflector peers.  Also deals more 
+    robustly with exceptions during collection of debug data.
+
+13. Collections can now have methods made available on them (via the adapter and hence 
+    also through the collection class).
+
+14. Debug details and exception messages can be saved to disk, printed out, or copied to 
+    the clipboard.

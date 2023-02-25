@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+  <title>Installing Naked Objects</title>
+
+  <sect1>
+    <title>Prerequisites</title>
+
+    <para>To develop or run Naked Objects applications you need Java version
+    1.5 or above installed on your machine.</para>
+
+    <para>To run the examples you will also need Ant installed. <ulink
+    url="http://ant.apache.org/">Ant</ulink> is available from Apache. As an
+    alternative to Ant you may build an application using <ulink
+    url="http://maven.apache.org">Maven</ulink>, which is also available from
+    Apache.</para>
+
+    <para>To develop applications you will need a suitable development
+    environment. If you have the choice, we recommend using <ulink
+    url="www.eclipse.org">Eclipse</ulink>, because there are some specific
+    plug-ins available for Eclipse to facilitate developing with Naked
+    Objects. However, Naked Objects may be used with any IDE, or even just the
+    JDK.</para>
+  </sect1>
+
+  <sect1>
+    <title>Downloading the framework</title>
+
+    <para>The latest version of the Naked Objects framework can be downloaded
+    from the downloads page of the <ulink
+    url="http://sourceforge.net/projects/nakedobjects/">Naked Objects
+    Sourceforge project</ulink> as shown below. You may download either the
+    binary release (suffixed with '-bin' ) for immediate use, the full source
+    release (suffixed with '-source' ) if you wish to build the framework
+    yourself, or simply a jar file that bundles in all the dependencies but
+    has no documentation or other resources.</para>
+
+    <screenshot>
+      <mediaobject>
+        <imageobject>
+          <imagedata contentwidth="40%" fileref="images/downloads.png"
+                     format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </screenshot>
+  </sect1>
+
+  <sect1>
+    <title>Installing Naked Objects</title>
+
+    <para>Extract the downloaded file's content into a suitable directory (a
+    root directory is created upon extraction so there is no need to create a
+    directory in which to install everything).</para>
+
+    <sect2>
+      <title>Binary release</title>
+
+      <para>The binary release provides the following directories and
+      files:-</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>a set of jar files making up the Naked Objects framework, and
+          other third party jars required by the framework (in <filename
+          class="directory" moreinfo="none">lib/</filename>)</para>
+        </listitem>
+
+        <listitem>
+          <para>one or more demo applications that may be run from the command
+          line (in <filename class="directory"
+          moreinfo="none">demos/</filename>)</para>
+        </listitem>
+
+        <listitem>
+          <para>one or more example applications that may be edited, compiled
+          and run via Ant (in <filename class="directory"
+          moreinfo="none">examples/</filename>)</para>
+        </listitem>
+
+        <listitem>
+          <para>documentation (in <filename class="directory"
+          moreinfo="none">docs/</filename>)</para>
+        </listitem>
+
+        <listitem>
+          <para>a <filename class="directory"
+          moreinfo="none">resource</filename> directory with icon images and
+          templates</para>
+        </listitem>
+      </itemizedlist>
+    </sect2>
+
+    <sect2>
+      <title>Source release</title>
+
+      <para>The source release contains a series of directories, which are
+      Eclipse projects, for the different subcomponents of Naked Objects, the
+      libs and examples. This source can be used, with the templates in the
+      build directories, to recreate the distributions made publicly
+      available.</para>
+
+      <para>To install all the components into your local repository, and
+      generate the distribution files, use the install goal twice in Maven as
+      below:</para>
+
+      <screen>&gt; cd nakedobjects-3.0.1 &gt; mvn clean install &gt; mvn clean
+      install -P dist</screen>
+
+      <para>Any missing resources that maven complains about are can be
+      installed into the repository by specifying the specific jar file from
+      the lib directory when following the instructions that Maven gives
+      you.</para>
+
+      <para>Using the source release Maven will build the same files that you
+      would download if you had downloaded a binary version. The distribution
+      files (as detailed for the binary release above) are to be found within
+      the directory <filename class="directory"
+      moreinfo="none">distribution/tarball/target</filename> as shown
+      below.</para>
+
+      <screen>distribution tarball target nakedobjects-3.0.1-bin.tar.gz
+      nakedobjects-3.0.1-bin.zip nakedobjects-3.0.1-source.zip
+      nakedobjects-3.0.1-with-dependencies.jar </screen>
+    </sect2>
+  </sect1>
+</chapter>

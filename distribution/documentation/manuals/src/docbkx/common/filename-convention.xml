@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+  <title>File name conventions used within Naked Objects distributions</title>
+
+  <sect1>
+    <title>File names</title>
+
+    <para>The names given to then download files indicate what the product is,
+    which platform it runs on and its version. The version indicates the stage
+    of development and how stable the system should be. The file name format
+    is as follows:</para>
+
+    <screen>nakedobjects-[version]-[build]-[product]-[platform].[file-type]</screen>
+
+    <para>For example:-</para>
+
+    <screen>nakedobjects-3.0M3-r1258-demo-java.zip
+nakedobjects-3.0M3-r1258-developer-java.zip
+nakedobjects-3.0M3-r1258-source.zip</screen>
+
+    <para>The parts of the name are:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>version</term>
+
+        <listitem>
+          <para>see next section</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>build</term>
+
+        <listitem>
+          <para>The build number is the revision of the repository sources
+          used when the distribution was built.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>product</term>
+
+        <listitem>
+          <para>At the moment we distribute the core framework, which is
+          <methodname>nof-developer</methodname>, and a demo version,
+          <methodname>nof-demo</methodname>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>platform</term>
+
+        <listitem>
+          <para>We target two platforms with the core framework; Java and .NET
+          (indicated as <methodname>java</methodname> and
+          <methodname>dotnet</methodname>). Other components might support
+          either or both. Also available is a source distribution, which does
+          not contain any binary code and must be built before it can be
+          used.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>file-type</term>
+
+        <listitem>
+          <para>The file type is <filename>zip</filename> or
+          <filename>tar.gz</filename> (GNU compressed tar).</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect1>
+
+  <sect1>
+    <title>Versions</title>
+
+    <variablelist>
+      <varlistentry>
+        <term>n.n.n</term>
+
+        <listitem>
+          <para>Stable release, with version number split into major, minor
+          and fix components. Major versions develop upon, but do not limit
+          themselves to, the previous major version. Minor versions extend the
+          previous version while maintaining compatibility with them. Fix
+          versions fix problems in the existing version, but do not add any
+          new functionality.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>n.nRCn or n.nMnRCn</term>
+
+        <listitem>
+          <para>Release candidates are preliminary releases of a stable
+          version. Assuming that no majors issues arise with such a release it
+          will subsequently be promoted to a stable release, and the code
+          re-released.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>n.nMn</term>
+
+        <listitem>
+          <para>Milestones within a version of the NOF are relatively stable
+          versions of the framework that introduce new functionality that is
+          part of the development plan for the versioned release. The
+          milestones precede the versioned releases, that is 3.0M3 will be
+          released as part of the development of 3.0. Functionality within the
+          milestones for a major version is not fixed and may change as
+          further development takes place.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>n.nDn or n.nMnDn</term>
+
+        <listitem>
+          <para>Development releases are work in progress during the
+          development of the current milestone or major/minor version. These
+          should generally be usable as they are not normally released when
+          the code has known major problems.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>n.nDn-SNAPSHOT or n.nMnDn-SNAPSHOT</term>
+
+        <listitem>
+          <para>Snapshot releases are released on an regular basis, and hence
+          may not even be runnable, depending that state of development. These
+          are generally a way to keep up with latest development without using
+          subversion.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect1>
+</chapter>

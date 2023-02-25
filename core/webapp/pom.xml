@@ -1,0 +1,69 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>Core Webapp Bootstrapper</name>
+	<groupId>org.nakedobjects.core</groupId>
+	<artifactId>webapp</artifactId>
+
+    <parent>
+        <groupId>org.nakedobjects</groupId>
+        <artifactId>core</artifactId>
+        <version>4.0.0</version>
+    </parent>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<!-- This is broken in maven-war-plugin 2.0, works in 2.0.1 -->
+					<warSourceExcludes>
+						WEB-INF/lib/*.jar
+					</warSourceExcludes>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<wtpversion>2.0</wtpversion>
+				</configuration>
+			</plugin>
+            
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <configuration>
+                    <webAppConfig>
+                        <contextPath>webapp</contextPath>
+                    </webAppConfig>
+                </configuration>
+            </plugin>
+            
+		</plugins>
+	</build>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.nakedobjects.core</groupId>
+            <artifactId>runtime</artifactId>
+		</dependency>
+
+	    <dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>servlet-api</artifactId>
+		    <scope>provided</scope>
+        </dependency>
+
+	</dependencies>
+
+
+</project>

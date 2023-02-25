@@ -1,0 +1,10 @@
+ ------
+ Welcome to Naked Objects
+ ------
+
+Welcome to Naked Objects
+
+
+
+	Naked Objects is an open source Java-based application development platform. It's called Naked Objects because all you need to develop are your domain objects - the Naked Objects platform auto-creates an object-oriented user interface (giving you the choice of different styles) and the underlying database (using Hibernate)
+ 

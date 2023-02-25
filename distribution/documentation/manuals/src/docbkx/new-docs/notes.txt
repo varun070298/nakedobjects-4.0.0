@@ -1,0 +1,14 @@
+Running Naked Objects
+
+
+The command line container runs Naked Objects within its own container and is best suited to running from the command line where parameters are used to determine what components are used and how it all runs. In essense we are running Java with the NakedObjects class like this
+
+$ java -cp <classpath> org.nakedobjects.runtime.NakedObject <parameters...>
+
+however we typically use a script like the one created by the archetype so we can run more easily, eg
+
+$ ./nakedobjects.sh <parameters...>
+
+The NakedObjects class immediately starts up the logging so that log messages are never lost. Next the InstallerLook object is instantiated. This loads up all the installers that can be found on the classpath, which are listed in /runtime/src/main/resources/installer-registry.properties.  This allows NakedObjects to be aware of all the components that are available, allowing names such as xml, file, dnd and html to be used to refer to components instead of their fully qualified class names.  (This list is maintained along with the framework and public available components will be added to the registry list when we know about them.)
+
+With these details loaded NakedObjects then parses the command line parameters. If there is problem with these then a help text is displayed list all the options and the program exits. With the command line arguments processed NakedObjects initializes the installers and bootstraps the system.

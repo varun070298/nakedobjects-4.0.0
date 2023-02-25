@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+  <title></title>
+
+  <section>
+    <title></title>
+
+    <para><emphasis>Context</emphasis></para>
+
+    <para>The NakedObjectContext provide access to the main components of the
+    NOF. If the system is started in a multi-user mode then the context will
+    hold specific components for specific execution contexts, allowing the
+    same process to access the same components and different processes to
+    access unique instances.</para>
+
+    <para>Each execution context will have its own Persistor, Message Broker
+    and Update Notifier.</para>
+
+    <para>The Reflector and Configuration are shared among all execution
+    contexts.</para>
+
+    <para><emphasis>Persistor</emphasis></para>
+
+    <para>During startup the persistor is given a set of service objects.
+    During intialisation the persistor must determine the OIDs for these
+    service objects. If the persistor does not know about a service (by its
+    ID) from a previous run then it must generate an OID for the service and
+    persist that with the ID of the service. This allows references to be held
+    persistently to service objects despite the fact that they are
+    singletons.</para>
+
+    <para><emphasis>Naked objects</emphasis></para>
+
+    <para></para>
+
+    <variablelist>
+      <varlistentry>
+        <term>Oid</term>
+
+        <listitem>
+          <para></para>
+
+          <para></para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Resolved State</term>
+
+        <listitem>
+          <para></para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Version</term>
+
+        <listitem>
+          <para></para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term></term>
+
+        <listitem>
+          <para></para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+    <para><emphasis>Identity map</emphasis></para>
+
+    <para>Any object that has identity (whether it is persisted or not) must
+    be registered with the identity map. This maps two relationships: domain
+    objects to proxies and OIDs to proxies.</para>
+
+    <para>Whenever a domain object is handled by the system, and before a
+    proxy is created, it must be checked against the identity map and if it
+    exists the proxy already in the identity map must be used instead of
+    creating a new proxy.</para>
+  </section>
+</chapter>

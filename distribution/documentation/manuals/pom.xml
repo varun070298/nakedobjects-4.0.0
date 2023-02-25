@@ -1,0 +1,145 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>Documentation Manuals</name>
+    <groupId>org.nakedobjects.distribution</groupId>
+    <artifactId>documentation-manuals</artifactId>
+    <packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.nakedobjects</groupId>
+		<artifactId>distribution</artifactId>
+		<version>4.0.0</version>
+	</parent>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.agilejava.docbkx</groupId>
+                <artifactId>docbkx-maven-plugin</artifactId>
+           		<version>2.0.8</version>
+                <configuration>
+                    <includes>**/application.xml,**/system.xml,**/framework.xml</includes>
+                    <xincludeSupported>true</xincludeSupported>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>html-docs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate-html</goal>
+                        </goals>
+
+                        <configuration>
+                            <excludes>old-src</excludes>
+                            <chunkedOutput>true</chunkedOutput>
+                            <htmlStylesheet>screen.css</htmlStylesheet>
+                            <sectionAutolabel>1</sectionAutolabel>
+                            <sectionLabelIncludesComponentLabel>1</sectionLabelIncludesComponentLabel>
+
+                            <postProcess>
+                                <copy todir="target/docbkx/html/application">
+                                    <fileset dir="src/docbkx/application">
+                                        <include name="images/*" />
+                                    </fileset>
+                                    <fileset dir="src/docbkx/common">
+                                        <include name="images/*" />
+                                    </fileset>
+                                    <fileset dir="src/docbkx/style">
+                                        <include name="*.css" />
+                                    </fileset>
+                                </copy>
+
+                                <copy todir="target/docbkx/html/system">
+                                    <fileset dir="src/docbkx/system">
+                                        <include name="images/*" />
+                                    </fileset>
+                                    <fileset dir="src/docbkx/style">
+                                        <include name="*.css" />
+                                    </fileset>
+                                </copy>
+
+                                <copy todir="target/docbkx/html/framework">
+                                    <fileset dir="src/docbkx/framework">
+                                        <include name="images/*" />
+                                    </fileset>
+                                    <fileset dir="src/docbkx/style">
+                                        <include name="*.css" />
+                                    </fileset>
+                                </copy>
+                            </postProcess>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>pdf-docs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate-pdf</goal>
+                        </goals>
+                        <configuration>
+                            <argLine>-Xmx1024m</argLine>
+                            <imgSrcPath>${basedir}/target/docbkx/pdf/</imgSrcPath>
+              				<foCustomization>${basedir}/src/docbkx/style/fop-cust.xsl</foCustomization>
+              				<doubleSided>1</doubleSided>
+
+                            <preProcess>
+                                <copy todir="${basedir}/target/docbkx/pdf">
+                                    <fileset dir="${basedir}/src/docbkx">
+                                        <include name="images/*" />
+                                    </fileset>
+                                </copy>
+
+                                <copy todir="${basedir}/target/docbkx/pdf">
+                                    <fileset dir="${basedir}/src/docbkx/application">
+                                        <include name="images/*" />
+                                    </fileset>
+                                </copy>
+
+                                <copy todir="${basedir}/target/docbkx/pdf">
+                                    <fileset dir="${basedir}/src/docbkx/common">
+                                        <include name="images/*" />
+                                    </fileset>
+                                </copy>
+
+                                <copy todir="${basedir}/target/docbkx/pdf">
+                                    <fileset dir="${basedir}/src/docbkx/system">
+                                        <include name="images/*" />
+                                    </fileset>
+                                </copy>
+                            </preProcess>
+                        </configuration>
+                    </execution>
+                </executions>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.docbook</groupId>
+                        <artifactId>docbook-xml</artifactId>
+                        <version>4.4</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.java</groupId>
+                        <artifactId>jimi</artifactId>
+                        <version>1.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+		    <groupId>org.nakedobjects.distribution</groupId>
+            <artifactId>documentation-examples</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        	
+
+    </dependencies>
+    
+</project>

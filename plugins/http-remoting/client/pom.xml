@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>HTTP Remoting (Client-side)</name>
+    <groupId>org.nakedobjects.plugins</groupId>
+	<artifactId>http-remoting-client</artifactId>
+
+	<parent>
+		<groupId>org.nakedobjects.plugins</groupId>
+		<artifactId>http-remoting</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.nakedobjects.core</groupId>
+			<artifactId>metamodel</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.nakedobjects.core</groupId>
+			<artifactId>runtime</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.nakedobjects.core</groupId>
+			<artifactId>remoting</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>commons-httpclient</groupId>
+		    <artifactId>commons-httpclient</artifactId>
+		</dependency>
+	</dependencies>
+	
+	
+</project>

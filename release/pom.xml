@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>Naked Objects Release</name>
+    <description />
+    <groupId>org.nakedobjects</groupId>
+	<artifactId>release</artifactId>
+    <packaging>pom</packaging>
+	<version>4.0.0</version>
+
+    <url>http://development.nakedobjects.org/</url>
+    <organization>
+        <name>Naked Objects Group Ltd.</name>
+        <url>http://www.nakedobjects.org</url>
+    </organization>
+
+    <scm>
+        <connection>scm:svn:http://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/tags/nakedobjects-4.0.0/release</connection>
+        <developerConnection>scm:svn:https://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/tags/nakedobjects-4.0.0/release</developerConnection>
+        <url>http://development.nakedobjects.org/trac/browser/framework/tags/nakedobjects-4.0.0/release</url>
+    </scm>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <showDeprecation>false</showDeprecation>
+                    <showWarnings>false</showWarnings>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>test-compile</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <downloadSources>true</downloadSources>
+                    <downloadJavadocs>true</downloadJavadocs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+	    <dependencies>
+	        <dependency>
+                <groupId>org.nakedobjects</groupId>
+                <artifactId>applib</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+            
+	        <dependency>
+                <groupId>org.nakedobjects</groupId>
+                <artifactId>applib</artifactId>
+                <classifier>javadoc</classifier>
+                <version>4.0.0</version>
+            </dependency>
+            
+		    <dependency>
+			    <groupId>org.nakedobjects.core</groupId>
+			    <artifactId>metamodel</artifactId>
+			    <version>4.0.0</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.core</groupId>
+			    <artifactId>runtime</artifactId>
+		        <version>4.0.0</version>
+		    </dependency>
+            <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+                <artifactId>bytecode-cglib</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+		    <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+			    <artifactId>bytecode-javassist</artifactId>
+                <version>4.0.0</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.core</groupId>
+			    <artifactId>remoting</artifactId>
+                <version>4.0.0</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.core</groupId>
+			    <artifactId>webapp</artifactId>
+			    <version>4.0.0</version>
+		    </dependency> 
+		    <dependency>
+                <groupId>org.nakedobjects.core</groupId>
+            	<artifactId>webserver</artifactId>
+                <version>4.0.0</version>
+		    </dependency>
+
+	        <!-- plugins -->
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>dnd-viewer</artifactId>
+	            <version>1.0.0</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>html-viewer</artifactId>
+	            <version>1.0.0</version>
+		    </dependency>
+	        <dependency>
+	            <groupId>org.nakedobjects.plugins</groupId>
+	            <artifactId>headless</artifactId>
+	            <version>1.0.0</version>
+	        </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>xml-persistor</artifactId>
+	            <version>1.0.0</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>xml-persistor</artifactId>
+			    <version>1.0.0</version>
+		    </dependency>
+		    <!-- Not provided in version 4.0
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>berkeley-persistor</artifactId>
+			    <version>1.0-beta-3-SNAPSHOT</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>sql-persistor</artifactId>
+			    <version>1.0-beta-3-SNAPSHOT</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>hibernate-persistor</artifactId>
+			    <version>1.0-beta-3-SNAPSHOT</version>
+		    </dependency>
+		    -->
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>http-remoting-client</artifactId>
+			    <version>1.0.0</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>http-remoting-server</artifactId>
+			    <version>1.0.0</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>xstream-marshalling</artifactId>
+			    <version>1.0.0</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>headless-applib</artifactId>
+			    <version>1.0.0</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>headless-embedded</artifactId>
+			    <version>1.0.0</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>headless-junit</artifactId>
+			    <version>1.0.0</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.nakedobjects.plugins</groupId>
+			    <artifactId>headless-viewer</artifactId>
+			    <version>1.0.0</version>
+		    </dependency>
+			
+	    </dependencies>
+    </dependencyManagement>
+    
+    
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshot-repository</id>
+            <name>Naked Objects Build Server</name>
+            <url>file:///srv/repo/snapshot</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+        <repository>
+            <id>repository</id>
+            <name>Naked Objects Repository</name>
+    	    <url>sftp://web.sourceforge.net/home/groups/n/na/nakedobjects/htdocs/m2-repo/release</url>
+        </repository>
+    </distributionManagement>
+
+</project>

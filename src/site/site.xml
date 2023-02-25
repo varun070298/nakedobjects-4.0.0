@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="${project.name}">
+  
+  <bannerLeft>
+  	<name>Naked Objects</name>
+    <src>http://www.nakedobjects.org/images/logo_NO_website_set1.png</src> 
+    <href>http://www.nakedobjects.org/</href>
+  </bannerLeft>
+  
+  <bannerRight>
+    <name>${project.name}</name>
+  </bannerRight>
+  
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-default-skin</artifactId>
+  </skin>
+
+	<version position="left"/>
+
+
+   <poweredBy>
+  	  <logo name="SourceForge.net" href="http://sourceforge.net/"
+          img="http://sflogo.sourceforge.net/sflogo.php?group_id=160910&amp;type=2"/>
+  	</poweredBy>
+  
+  <publishDate format="dd MMM yyyy hh:mm" />
+  
+  <body>
+  
+  <!--
+    <links>
+      <item name="Apache" href="http://www.apache.org/"/>
+      <item name="Maven" href="http://maven.apache.org/"/>
+      <item name="Continuum" href="http://maven.apache.org/continuum"/>
+    </links>
+
+    <head>
+      <meta name="faq" content="proficio"/>
+    </head>
+-->
+
+    <menu name="Naked Objects Development" >
+	      <item name="News" href="what-is-nakedobjects.html"/>
+	      <item name="FAQ" href="what-is-nakedobjects.html"/>
+    </menu>
+
+ 	<menu ref="parent" />
+
+ 	<menu ref="modules" inherit="top"/>
+
+    <menu ref="reports"  inherit="top"/>
+
+  </body>
+</project>

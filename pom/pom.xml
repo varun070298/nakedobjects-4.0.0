@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.nakedobjects</groupId>
+    <artifactId>nakedobjects-parent</artifactId>
+    <version>5</version>
+    <packaging>pom</packaging>
+    
+    <name>Naked Objects POM</name>
+    <description></description>
+    <url>http://development.nakedobjects.org/</url>
+    <inceptionYear>2001</inceptionYear>
+    <organization>
+        <name>Naked Objects Group Ltd.</name>
+        <url>http://www.nakedobjects.org</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>manual</distribution>
+        </license>
+    </licenses>
+    
+    <developers>
+        <developer>
+            <id>rcmatthews</id>
+            <name>Robert Matthews</name>
+            <email>rmatthews@nakedobjects.org</email>
+            <organization>Naked Objects Group Ltd.</organization>
+            <organizationUrl>http://www.nakedobjects.org</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>+0</timezone>
+        </developer>
+        <developer>
+            <id>rpawson</id>
+            <name>Richard Pawson</name>
+            <email>rpawson@nakedobjects.org</email>
+            <organization>Naked Objects Group Ltd.</organization>
+            <organizationUrl>http://www.nakedobjects.org</organizationUrl>
+            <roles />
+            <timezone>+0</timezone>
+        </developer>
+        <developer>
+            <id>scascarini</id>
+            <name>Stef Cascarini</name>
+            <email>scascarini@nakedobjects.org</email>
+            <organization>Naked Objects Group Ltd.</organization>
+            <organizationUrl>http://www.nakedobjects.org</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+0</timezone>
+        </developer>
+        <developer>
+            <id>dkhaywood</id>
+            <name>Dan Haywood</name>
+            <email>dan@haywood-associates.co.uk</email>
+            <organization>Haywood Associates Ltd.</organization>
+            <organizationUrl>http://www.haywood-associates.co.uk</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+0</timezone>
+        </developer>
+    </developers>
+    <contributors>
+        <contributor />
+    </contributors>
+    
+    <issueManagement>
+        <system>Trac</system>
+        <url>http://development.nakedobjects.org/trac/report</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:svn:http://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/trunk/pom</connection>
+        <developerConnection>scm:svn:https://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/trunk/pom</developerConnection>
+        <url>http://development.nakedobjects.org/trac/browser/framework/trunk/pom</url>
+    </scm>
+    <ciManagement>
+        <system>Hudson</system>
+        <url>http://development.nakedobjects.org/hudson/</url>
+        <notifiers>
+            <notifier>
+                <type>mail</type>
+                <address>rmatthews@nakedobjects.org</address>
+                <sendOnError />
+                <sendOnFailure />
+                <sendOnSuccess />
+                <sendOnWarning />
+                <configuration />
+            </notifier>
+        </notifiers>
+    </ciManagement>
+    
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>1.0-beta-5</version>
+            </extension>
+           <extension>
+                <groupId>org.apache.maven.archetype</groupId>
+                <artifactId>archetype-packaging</artifactId>
+                <version>2.0-alpha-3</version>
+            </extension>
+        </extensions>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                      <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-deploy-plugin</artifactId>
+              <version>2.4</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-archetype-plugin</artifactId>
+                <version>2.0-alpha-3</version>
+                <extensions>true</extensions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <showDeprecation>false</showDeprecation>
+                    <showWarnings>false</showWarnings>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>test-compile</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--  create source jars of main and test code -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+					<junitArtifactName>junit:junit-dep</junitArtifactName>
+                    <excludes>
+                        <exclude>**/Test*.java</exclude>
+                    </excludes>
+                    <useFile>true</useFile>
+                    <printSummary>false</printSummary>
+                    <outputDirectory>${project.build.directory}/surefire-reports</outputDirectory>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.0-beta-9</version>
+                <configuration>
+                    <remoteTagging>true</remoteTagging>
+                    <preparationGoals>clean install</preparationGoals>
+                    <autoVersionSubmodules>false</autoVersionSubmodules>
+                </configuration>
+            </plugin>
+
+          </plugins>
+        </pluginManagement>
+        
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <downloadSources>true</downloadSources>
+                    <downloadJavadocs>true</downloadJavadocs>
+                </configuration>
+            </plugin>
+<!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <id>xml</id>
+                    <doclet>org.nakedobjects.doclet.xml.XmlDoclet</doclet>
+                    <docletArtifact>
+                        <groupId>org.nakedobjects.developers</groupId>
+                        <artifactId>xmldoclet</artifactId>
+                        <version>1.0</version>
+                    </docletArtifact>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </configuration>
+            </plugin>
+-->         
+        </plugins>
+    </build>
+    <reporting>
+        <plugins>
+            <!--  General project overview -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>license</report>
+                            <report>project-team</report>
+                            <report>issue-tracking</report>
+                            <report>scm</report>
+                            <report>cim</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <reports>
+                            <report>dependencies</report>
+                            <report>dependency-convergence</report>
+                            <report>index</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+   
+    <dependencyManagement>
+        <dependencies>
+
+			<!-- Logging -->            
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.14</version>
+            </dependency>
+
+			<!-- Apache Commons -->            
+	        <dependency>
+    			<groupId>commons-logging</groupId>
+	    		<artifactId>commons-logging</artifactId>
+	            <version>1.0.4</version>
+		    </dependency>
+		    <dependency>
+			    <groupId>commons-collections</groupId>
+			    <artifactId>commons-collections</artifactId>
+			    <version>3.2.1</version>
+            </dependency>
+		    <dependency>
+			    <groupId>commons-cli</groupId>
+			    <artifactId>commons-cli</artifactId>
+			    <version>1.0</version>
+		    </dependency>
+			<dependency>
+			    <groupId>commons-httpclient</groupId>
+			    <artifactId>commons-httpclient</artifactId>
+			    <version>3.1</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.3</version>
+			</dependency>
+
+			<!-- Bytecode libraries -->			
+            <dependency>
+                <groupId>asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>3.1</version>
+            </dependency>
+            <dependency>
+
+                <groupId>org.objenesis</groupId>
+                <artifactId>objenesis</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib-nodep</artifactId>
+                <version>2.1_3</version>
+            </dependency>
+	        <dependency>
+	            <groupId>javassist</groupId>
+	            <artifactId>javassist</artifactId>
+	            <version>3.8.0.GA</version>
+	        </dependency>
+
+			<!-- XML libraries -->            
+		    <dependency>
+			    <groupId>crimson</groupId>
+			    <artifactId>crimson</artifactId>
+			    <version>1.1.3</version>
+		    </dependency>
+            <dependency>
+                <groupId>xom</groupId>
+                <artifactId>xom</artifactId>
+                <version>1.1</version>
+            </dependency>
+
+			<!-- Assertions (see also test libraries) -->			
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-library</artifactId>
+                <version>1.1</version>
+            </dependency>
+
+
+			<!-- Web development -->
+			<dependency>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty</artifactId>
+				<version>6.1.16</version>
+			</dependency>
+
+
+			<!-- Testing libraries (not scope=test because used by headless-junit) -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jmock</groupId>
+                <artifactId>jmock-junit4</artifactId>
+                <version>2.4.0</version>
+            </dependency>
+            
+			<!-- scope=test dependencies -->
+	        <dependency>
+	            <groupId>org.easymock</groupId>
+	            <artifactId>easymock</artifactId>
+				<version>2.3</version>
+	            <scope>test</scope>
+	        </dependency>
+
+
+			<!-- Specs -->
+			<dependency>
+				<groupId>geronimo-spec</groupId>
+				<artifactId>geronimo-spec-jta</artifactId>
+				<version>1.0.1B-rc1</version>
+			</dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>2.3</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+   
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshot-repository</id>
+            <name>Naked Objects Repository</name>
+            <!--
+            <url>sftp://web.sourceforge.net/home/groups/n/na/nakedobjects/htdocs/m2-repo/snapshot</url>
+            -->
+            <url>file:///srv/repo/snapshot</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+        <repository>
+            <id>repository</id>
+            <name>Naked Objects Repository</name>
+    	    <url>sftp://web.sourceforge.net/home/groups/n/na/nakedobjects/htdocs/m2-repo/release</url>
+        </repository>
+        <!--
+          REMOVED so that release does not upload site, which isn't defined properly yet
+        <site>
+            <id>site-upload</id>
+            <name>Naked Objects Site</name>
+            <url>sftp://web.sourceforge.net/home/groups/n/na/nakedobjects/htdocs/development</url> 
+        </site>
+        -->
+    </distributionManagement>
+</project>

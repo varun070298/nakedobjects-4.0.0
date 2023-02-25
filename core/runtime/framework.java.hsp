@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local-project language="java" version="3.2.218" flavor="j2se">
+   <property name="hide-externals" value="true" />
+   <property name="detail-mode" value="true" />
+   <classpath>
+      <classpathentry kind="lib" path="C:\SVN-NO\framework-trunk-REORG\framework\target\classes" />
+   </classpath>
+   <transformations>
+      <transformation in="org.nakedobjects.installers.InstallerLookup" out="org.nakedobjects.persistence.InstallerLookup" />
+      <transformation in="org.nakedobjects.installers.InstallerAbstract" out="org.nakedobjects.installerimpl.InstallerAbstract" />
+      <transformation in="org.nakedobjects.installers.*" out="org.nakedobjects.persistence.*" />
+   </transformations>
+</local-project>
+

@@ -1,0 +1,46 @@
+dn: dc=nakedobjects,dc=org
+objectClass: top
+objectclass: dcObject
+objectclass: organization
+o: Naked Objects Group
+dc: nakedobjects
+
+dn: cn=Manager,dc=nakedobjects,dc=org
+objectclass: organizationalRole
+cn: Manager
+
+
+dn: ou=people,dc=nakedobjects,dc=org
+objectClass: top
+objectClass: organizationalUnit
+ou: people
+
+dn: uid=joe,ou=people,dc=nakedobjects,dc=org
+objectClass: person
+objectClass: inetOrgPerson
+cn: Joe Bloggs
+displayName: Joe Bloggs
+givenName: Joe
+sn: Bloggs
+uid: joe
+userPassword: pass
+
+dn: uid=john,ou=people,dc=nakedobjects,dc=org
+objectClass: person
+objectClass: inetOrgPerson
+cn: John Bloggs
+displayName: John
+givenName: John
+sn: Bloggs
+uid: john
+userPassword: pass
+
+dn: uid=jack,ou=people,dc=nakedobjects,dc=org
+objectClass: person
+objectClass: inetOrgPerson
+cn: Jack Bloggs
+displayName: Jack Bloggs
+givenName: Jack
+sn: Bloggs
+uid: jack
+userPassword: pass

@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>XStream Marshalling</name>
+    <groupId>org.nakedobjects.plugins</groupId>
+	<artifactId>xstream-marshalling</artifactId>
+	<version>1.0.0</version>
+
+	<parent>
+		<groupId>org.nakedobjects</groupId>
+		<artifactId>core</artifactId>
+    	<version>4.0.0</version>
+		<relativePath>../../core/pom.xml</relativePath>
+	</parent>
+
+    <scm>
+        <connection>scm:svn:http://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/tags/nakedobjects-4.0.0/plugins/xstream-marshalling</connection>
+        <developerConnection>scm:svn:https://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/tags/nakedobjects-4.0.0/plugins/xstream-marshalling</developerConnection>
+        <url>scm:svn:https://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/tags/nakedobjects-4.0.0/plugins/xstream-marshalling</url>
+    </scm>
+
+	<build>
+	    <plugins>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-release-plugin</artifactId>
+               <configuration>
+                   <tagBase>https://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/tags/plugins</tagBase>
+               </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.2.1</version>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.nakedobjects.core</groupId>
+			<artifactId>remoting</artifactId>
+		</dependency>
+		
+	</dependencies>
+</project>

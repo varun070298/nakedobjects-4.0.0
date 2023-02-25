@@ -1,0 +1,2129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY installation-guide SYSTEM "../common/installing-nof.xml">
+<!ENTITY filename-convention SYSTEM "../common/filename-convention.xml">
+]>
+<book>
+  <bookinfo>
+    <title>Naked Objects 3.0 [NOT YET UPDATED FOR 4.0]</title>
+
+    <subtitle>Framework Development Manual</subtitle>
+
+    <releaseinfo>Version 0.1</releaseinfo>
+
+    <authorgroup>
+      <author>
+        <firstname>Robert</firstname>
+
+        <surname>Matthews</surname>
+      </author>
+
+      <author>
+        <firstname>Richard</firstname>
+
+        <surname>Pawson</surname>
+      </author>
+
+      <author>
+        <firstname>Stef</firstname>
+
+        <surname>Cascarini</surname>
+      </author>
+    </authorgroup>
+
+    <legalnotice>
+      <para>Permission is granted to make and distribute verbatim copies of
+      this manual provided that the copyright notice and this permission
+      notice are preserved on all copies.</para>
+    </legalnotice>
+  </bookinfo>
+
+  <!-- front matter -->
+
+  <toc></toc>
+
+  <preface id="preface">
+    <title>Preface</title>
+
+    <para>This manual documents the development of the Naked Objects
+    Framework, its associated components and tools.</para>
+
+    <note>
+      <para>This manual has not yet been updated for Naked Objects 4.0.</para>
+    </note>
+
+    <para>You can download Naked Objects via <ulink
+    url="www.nakedobjects.org">www.nakedobjects.org</ulink>, or direct from
+    <ulink
+    url="http://sourceforge.net/projects/nakedobjects/">SourceForge</ulink>,
+    under an open source licence.</para>
+
+    <para>This edition of the manual is intended for use with version 3.0 of
+    the Naked Objects framework, which works with Java version 1.5 or
+    higher.</para>
+  </preface>
+
+  <!-- main content -->
+
+  <part id="part1">
+    <title>Developing the NOF</title>
+
+    &installation-guide;
+
+    <chapter id="gettingStarted">
+      <title>Getting Started</title>
+
+      <para><emphasis>NOTE</emphasis> - this section should deal with two
+      configurations: 1) setting up with the latest stable release for
+      developing systems with NO ; and 2) setting up a framework development
+      environment for developers working on the framework itself.</para>
+
+      <para>The Naked Objects project is hosted on SourceForge under the
+      project name <ulink
+      url="http://sourceforge.net/projects/nakedobjects">nakedobjects</ulink>.
+      We use Subversion for our code repository, Trac for issue tracking and
+      development management, and Eclipse is our favoured IDE.</para>
+
+      <para>This manual considers two types of developer (a third type, the
+      application developer, should refer to the Application Developer
+      documentation): those developing systems with the framework and need to
+      extend it; and those actively developing the framework. The first type
+      are likely to be working from the released code (in either binary or
+      source form), while the latter need to work from the development source
+      code</para>
+
+      <para></para>
+
+      <sect1>
+        <title>Framework source code</title>
+
+        <para></para>
+      </sect1>
+
+      <sect1>
+        <title>Building the framework</title>
+
+        <para></para>
+      </sect1>
+
+      <sect1>
+        <title>Developing in Eclipse</title>
+
+        <para></para>
+      </sect1>
+
+      <sect1>
+        <title>Getting Started</title>
+
+        <para>This section gets you set up with latest version of the Naked
+        Objects code.</para>
+
+        <sect2>
+          <title>Prerequisites</title>
+
+          <para>Naked Objects is developed in the <ulink
+          url="http://www.eclipse.org/">Eclipse</ulink> IDE and uses <ulink
+          url="http://ant.apache.org/">Maven</ulink> for building the
+          distributions. Any other IDE may be used, but we do keep the Eclipse
+          files on the repository, and will detail how set up Eclipse here.
+          Additionally you will need a <ulink
+          url="http://subversion.tigris.org/">Subversion</ulink> client to
+          access the repository.</para>
+
+          <para>The source code can be downloaded as a zip file, but we
+          suggest accessing the repository directly so you can keep up to date
+          with the ongoing developments.</para>
+        </sect2>
+
+        <sect2>
+          <title>Checking Out the framework</title>
+
+          <para>The current development version of the Naked Objects framework
+          can be downloaded from the Subversion repository on SourceForge. The
+          following command gets hold of the trunk (main line of ongoing
+          development) and creates a working directory called <filename
+          class="directory" moreinfo="none">nakedobjects</filename>:</para>
+
+          <screen format="linespecific">svn checkout https://nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/trunk nakedobjects</screen>
+
+          <para>If you are a registered developer then also specify your
+          SourceForge user name:</para>
+
+          <screen format="linespecific">svn checkout https://<emphasis>username</emphasis>@nakedobjects.svn.sourceforge.net/svnroot/nakedobjects/framework/trunk nakedobjects</screen>
+        </sect2>
+
+        <sect2>
+          <title>Keeping up-to-date</title>
+
+          <para>To keep you version of the NOF reflecting the version being
+          developed, use the svn update command to get hold of any changes.
+          For example:</para>
+
+          <screen format="linespecific">&gt; cd nakedobjects
+&gt; svn update
+U    no-core/src/org/nakedobjects/utility/Assert.java
+At revision 4843.</screen>
+        </sect2>
+
+        <sect2>
+          <title>Building using Maven 2</title>
+
+          <para>We now use Maven 2 to biuld and test the framework. Please
+          download and install version 2.0.6.</para>
+
+          <para>To compile, test and install the resulting Jars in the Maven
+          repository run the following (which shows a failure):</para>
+
+          <screen format="linespecific">$ mvn package
+[INFO] Scanning for projects...
+[INFO] Reactor build order: 
+[INFO]   Naked Objects
+[INFO]   Naked Objects Architecture
+[INFO]   Naked Objects Application Library
+[INFO]   Naked Objects Logging Utilities
+[INFO]   NOF Core
+:
+:
+:
+[INFO] [assembly:attached {execution: default}]
+[INFO] Reading assembly descriptor: /home/rcm/no-development/nakedobjects_DEV/no-architecture/src/main/assembly/test.xml
+[INFO] ------------------------------------------------------------------------
+[ERROR] BUILD ERROR
+[INFO] ------------------------------------------------------------------------
+[INFO] Error reading assemblies: Error locating assembly descriptor file: /home/rcm/no-development/nakedobjects_DEV/no-architecture/src/main/assembly/test.xml
+/</screen>
+        </sect2>
+
+        <sect2>
+          <title id="using-eclipse">Using Eclipse</title>
+
+          <para><emphasis role="strong">Please note - how we use Eclipse is
+          being reviewed, we are trying out OSGi packaging so the following
+          does not work.</emphasis></para>
+
+          <para><ulink url="http://www.eclipse.org/">Eclipse</ulink> is the
+          developement environment that we use to work on the source code and
+          consequently we store the project details in the repository. To
+          develop within Eclipse run it and select the workspace - either on
+          startup or by selecting the <emphasis role="strong">File/Switch
+          Workspace...</emphasis> menu item - to be the <filename
+          class="directory" moreinfo="none">nakedobjects</filename> directory
+          that you unzipped the source distribution to, or checked the
+          projects from the repository.</para>
+
+          <para>This brings up an empty eclipse window titled "Welcome to
+          Eclipse 3.1". Close this window and select the <emphasis
+          role="strong">File/Import</emphasis> menu item. Select "Existing
+          Projects into Workspace" and press the <emphasis
+          role="strong">Next</emphasis> button. Using the <emphasis
+          role="strong">Browse...</emphasis> button select the same directory
+          and on pressing <emphasis role="strong">OK</emphasis> you will see a
+          list of projects that can be imported.</para>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/import.png" format="PNG" width="6cm" />
+            </imageobject>
+          </mediaobject>
+
+          <para>Select all the projects (normally done already by default) and
+          press <emphasis role="strong">Finish</emphasis>. After a while all
+          the projects will have been imported and you are ready to start
+          developing.</para>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/imported.png" format="PNG"
+                         width="12cm" />
+            </imageobject>
+          </mediaobject>
+
+          <para>If you have subclipse installed then you will be able to
+          update your code from within Eclipse itself. It is even possible to
+          check it out directly in Eclipse using the <emphasis
+          role="strong">Checkout Project from SVN</emphasis> option.</para>
+        </sect2>
+      </sect1>
+    </chapter>
+
+    <chapter>
+       
+
+      <title>Build the NOF</title>
+
+       
+
+      <para>Maven 2.0 is used to build releases of the framework. Each project
+      is treated separately and artifacts from the build are placed in the
+      <filename class="directory" moreinfo="none">target</filename> directory
+      within each project. Each project has a <filename class="directory"
+      moreinfo="none">pom.xml</filename> files describing how it relates to
+      the other projects and how it should be compiled, tested and so
+      on.</para>
+
+       
+
+      <para>Each artifact is placed in the local repository once created, and
+      subsequent builds of dependent projects then use these artifact during
+      their builds.</para>
+
+       system 
+
+      <sect1>
+        <title>Clean</title>
+
+        <para>Before building all the artifacts can be removed using
+        clean.</para>
+
+        <screen format="linespecific">$mvn clean</screen>
+
+        <screen format="linespecific">$mvn install -Dmaven.test.skip=true</screen>
+      </sect1>
+
+       
+    </chapter>
+  </part>
+
+  <part id="part2">
+    <title>Programming</title>
+
+    <chapter>
+      <title>Build the NOF</title>
+
+      <para>Maven 2.0 is used to build releases of the framework. Each project
+      is treated separately and artifacts from the build are placed in the
+      <filename class="directory" moreinfo="none">target</filename> directory
+      within each project. Each project has a <filename class="directory"
+      moreinfo="none">pom.xml</filename> files describing how it relates to
+      the other projects and how it should be compiled, tested and so
+      on.</para>
+
+      <para>Each artifact is placed in the local repository once created, and
+      subsequent builds of dependent projects then use these artifact during
+      their builds.</para>
+
+      <sect1>
+        <title>Clean</title>
+
+        <para>Before building all the artifacts can be removed using
+        clean.</para>
+
+        <screen format="linespecific">$mvn clean</screen>
+
+        <screen format="linespecific">$mvn install -Dmaven.test.skip=true</screen>
+      </sect1>
+    </chapter>
+
+    <chapter>
+      <title>How to Resolve Problems in the Framework and its
+      Components</title>
+
+      <para>The NOF provides a number of tools to help resolve problems and
+      debug the system. These are mainly applicable to issues within system
+      code, but some of them can be useful when developing applications. The
+      framework provides the following:-</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Extensive use of logging through the <ulink
+          url="http://logging.apache.org/log4j/docs/">Log4j</ulink> framework,
+          an open source logging framework made available as part of the
+          Apache Jakarta project ;</para>
+        </listitem>
+
+        <listitem>
+          <para>Additional logging decorators that can be explicitly added to
+          specific component to capture details about the usage of those
+          components;</para>
+        </listitem>
+
+        <listitem>
+          <para>And, debug views (from the user interface) that display
+          details of components and anything else that implements the
+          <classname>DebugInfo</classname> interface.</para>
+        </listitem>
+      </itemizedlist>
+
+      <sect1>
+        <title>Logging</title>
+
+        <para>Logging using Log4j is used throughout the NOF and the
+        components the Naked Objects Group have created and it recommended
+        that you use it too. Logging allows you to look what the framework and
+        components have been when you investigate a problem and help to
+        identify what parts of the system where doing what before an problem
+        arose. Often logging alone is enough to pin point a problem, but if
+        not it help you target what to investigate.</para>
+
+        <para>Log4j allows you to log log debug messages, information about
+        the system's state, warnings and errors. These events can be displayed
+        on the console, written to files, or sent out over the network for
+        remote logging. These are output in a user defined format and also can
+        be filtered (so only events from certain components are seen). All
+        this is configured through a set of properties passed to Log4J.</para>
+
+        <sect2>
+          <title>Configuring Logging</title>
+
+          <para>The complete options for outputting and formatting can be
+          found in the relavent Log4J documentation (including the API).
+          However, it crucial to smooth development of an NOF system that will
+          cover some of it here. The NOF configures Log4j using properties
+          files and will generally load <filename class="directory"
+          moreinfo="none">log4j.properties</filename> or retrieve the
+          properties from the that were loaded from <filename
+          class="directory" moreinfo="none">nakedobjects.properties</filename>
+          after that is loaded for framework configuration (these files need
+          to be located in the working directory). If you are not using
+          classes within the NOF to start the framework then how these
+          properties are loaded could vary. The downside of putting the
+          logging properities in the framework properties files is that there
+          is no logging until it has been loaded. If this is necessary then it
+          is better to use the separate properties file.</para>
+
+          <para>The following file, or portion of a file, is a basic
+          configuration for logging. It consists of two appenders and a basic
+          logging configuration.</para>
+
+          <programlisting format="linespecific">log4j.rootLogger=INFO, Console, File
+
+# The console appender
+log4j.appender.Console=org.apache.log4j.ConsoleAppender
+log4j.appender.Console.Target=System.out
+log4j.appender.Console.layout=org.apache.log4j.PatternLayout
+log4j.appender.Console.layout.ConversionPattern=%-5r [%-20c{1} %-10t %-5p]  \t\t%m%n
+
+# The exploration.log file appender
+log4j.appender.File=org.apache.log4j.FileAppender
+log4j.appender.File.File=exploration.log
+log4j.appender.File.layout=org.apache.log4j.PatternLayout
+log4j.appender.File.layout.ConversionPattern=%-4r %-5p [%t] %37c %3x - %m%n
+log4j.appender.File.Append=false</programlisting>
+
+          <para>The first line sets up logging to show events of level
+          <emphasis>INFO</emphasis> and above through the
+          <emphasis>Console</emphasis> and <emphasis>File</emphasis>
+          appenders, which writes those events to the console and the file
+          <filename class="directory"
+          moreinfo="none">exploration.log</filename> respectively. The two
+          blocks sepcifiy how to write to the console and the file. Other
+          appenders can be used to change where the logs are written to. The
+          number of appenders specified is unlimited, although there should be
+          at least one. The console below (from Eclipse) shows the log. The
+          file will contain the same thing although the formatting will be
+          slightly different as the conversion pattern for the two appenders
+          is different.</para>
+
+          <screenshot fileref="images/console-log.png" side="left" width="40%"
+                      wrap="no"></screenshot>
+
+          <sect3>
+            <title>Logging levels</title>
+
+            <para>The types of events that are logged can be changed. This
+            determines how large the files become or how much traffic is put
+            over the network, and is reflected in the amount of processing
+            that needs to be done to process the events into messages that can
+            be written out. Levels in order of increasing verbosity and log
+            size, and is decreasing order of severity are:-</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>OFF - no logging</para>
+              </listitem>
+
+              <listitem>
+                <para>FATAL - something very serious has happened that
+                requires the system to be shut down.</para>
+              </listitem>
+
+              <listitem>
+                <para>ERROR - something serious has happened that might affect
+                any subsequent actions.</para>
+              </listitem>
+
+              <listitem>
+                <para>WARN - something has not been set up properly, or needs
+                attention. Although subsequent action might function
+                correctly, they might not function as expected.</para>
+              </listitem>
+
+              <listitem>
+                <para>INFO - information to the developer about something that
+                has taken place.</para>
+              </listitem>
+
+              <listitem>
+                <para>DEBUG - detailed information for the developer.</para>
+              </listitem>
+            </itemizedlist>
+
+            <para>So in the above example to increase the logging level to
+            debug change the first part of the property to
+            <emphasis>DEBUG</emphasis> from <emphasis>INFO</emphasis> as
+            below:</para>
+
+            <programlisting format="linespecific">log4j.rootLogger=DEBUG, Console, File</programlisting>
+
+            <para>Logging should almost never be set to off, but should at
+            least be set to log the errors (unsing level ERROR). Whilst
+            developing we recommend that you set your basic level to INFO and
+            switch to DEBUG if you need to investigate something.</para>
+
+            <para>Setting the logging level via the properties file applies
+            that level at startup and cannot be changed using the properties,
+            ie, that level will be used to filter all logged event while the
+            system is running. If you are using the Skylark viewer, however,
+            you can use the debug options to change the logging level on the
+            client at any time. By using Ctrl-Shift-right-click on the desktop
+            you will be shown the debug menu and see the following
+            options:-</para>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="left" fileref="images/logging-debug.png"
+                           format="PNG" />
+              </imageobject>
+            </mediaobject>
+
+            <para>The greyed-out option indicates the current level.
+            Selectiing one of the other levels will change the logging to that
+            level.</para>
+          </sect3>
+
+          <sect3>
+            <title>Limiting logging by class</title>
+
+            <para>As well as limiting the level of events that are logged, we
+            can also specify which classes we are interested in capturing log
+            events for. In Log4j events are organised by loggers, which are
+            set up programmatically, but as we create a logger for each class
+            we talk about classes.</para>
+
+            <para>To change the levels of events captured according to the
+            class where the log event was created we can class based
+            requirements after the root logger is specified. To set a logging
+            level for a class add a property in the form</para>
+
+            <programlisting format="linespecific">log4j.logger.&lt;package to log&gt;=&lt;level for package&gt;
+log4j.logger.&lt;class to log&gt;=&lt;level for class&gt;</programlisting>
+
+            <para>Events for the specified packages or class will be logged at
+            the specified level, overriding the root level set up first. So
+            for example the following configuration:</para>
+
+            <programlisting format="linespecific">log4j.rootLogger=WARN, Console
+
+log4j.logger.org.nakedobjects.object=INFO
+log4j.logger.org.nakedobjects.object.reflect=DEBUG
+log4j.logger.org.nakedobjects.object.persistence=DEBUG
+
+log4j.logger.org.nakedobjects.object.loader.ObjectLoaderImpl=OFF</programlisting>
+
+            <para>will capture warning and errors for all classes (as defined
+            by the root logger), and information messages for those classes
+            whose package begins with
+            <classname>org.nakedobjects.object</classname>. In addition those
+            classes beginning with <classname>org.nakedobjects.object.reflect
+            </classname>or
+            <classname>org.nakedobjects.object.persistence</classname> will
+            have their debug events captured as well. Finally, the class
+            <classname>ObjectLoader</classname> will have all of its events
+            ignored.</para>
+
+            <para>It is important to make use of this feature when using the
+            Skylark viewer as it logs events about it rendering. In Java
+            rendering the screen (via the
+            <methodname>paint(Graphics)</methodname> method) happens very
+            often and can cause the logs to be swamped with superflous events.
+            The logger for these events are prepended with the text 'ui.' so
+            we can disable all of these events across all the viewing classes
+            by adding the following to the properties:</para>
+
+            <programlisting format="linespecific">log4j.logger.ui=OFF</programlisting>
+          </sect3>
+
+          <sect3>
+            <title>Writing XML log files</title>
+
+            <para>By writing out the logs to a file in XML rather than as text
+            allows you to look at the log using Chainsaw, a Log4j viewer. This
+            tool allows you to quickly look at events in specific classes and
+            hide events that are of no interest by setting up simple
+            conditions.</para>
+
+            <para>To write out an XML file the same appender as before is
+            used, but the layout is changed. The following configuration logs
+            all events (DEBUG and greater) to a file with an XML
+            layout.</para>
+
+            <programlisting format="linespecific">log4j.rootLogger=DEBUG, XmlFile
+
+log4j.appender.XmlFile=org.apache.log4j.FileAppender
+log4j.appender.XmlFile.file=nakedobjects.log.xml
+log4j.appender.XmlFile.layout=org.apache.log4j.xml.XMLLayout
+log4j.appender.XmlFile.append=false</programlisting>
+          </sect3>
+
+          <sect3>
+            <title>Writing HTML log files</title>
+
+            <para>HTML files can be viewed in a web browser and will display
+            nicely in most email clients. Change the appender to use the
+            <classname>HTMLLayout</classname> class.</para>
+
+            <programlisting format="linespecific">log4j.appender.Snapshot.layout=org.apache.log4j.HTMLLayout</programlisting>
+
+            <sect2>
+              <title>Snapshot appenders</title>
+            </sect2>
+
+            <para>The NOF provides a number of appenders that create a
+            snapshot of the recently logged events instead of capturing all
+            events since the system started. The benefits here are twofold.
+            First, writing to the appenders is minimised as they are only
+            written when errors occur or the user demands it. Second, the
+            partial log can be automatically sent over the network to someone
+            who needs to know when things have gone wrong.</para>
+
+            <para>All the snapshot appends support the same basic
+            properties:-</para>
+
+            <block>
+              <label>
+                <methodname>addInfo</methodname>
+              </label>
+
+              <para>(boolean) indicates whether to prepend details about the
+              machine, os and Java to log, eg</para>
+
+              <programlisting format="linespecific">Snapshot:- Thu Dec 01 14:34:24 GMT 2005
+  R Matthews
+  Windows XP (x86) 5.1
+  Java HotSpot(TM) Client VM 1.4.2_04-b05
+  Version  000000</programlisting>
+            </block>
+
+            <block>
+              <label>
+                <methodname>bufferSize</methodname>
+              </label>
+
+              <para>(integer) the number of events to write out to the
+              snapshot. Defaults to 512 events.</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>locationInfo</methodname>
+              </label>
+
+              <para>(boolean) whether to capture the details of where in the
+              code the event was generated. Note - capturing this information
+              can be quite expensive.</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>evaluatorClass</methodname>
+              </label>
+
+              <para>(<classname>org.apache.log4j.spi.TriggeringEventEvaluator</classname>)
+              a trigger that determines when a snapshot should be created. The
+              trigger object is given each event that is logged and flags when
+              to produce a snapsho.</para>
+
+              <para>When not trigger is specified a default trigger is applied
+              that triggers a snapshot when an event of level ERROR or FATAL
+              occurs.</para>
+            </block>
+          </sect3>
+
+          <sect3>
+            <title>File snapshot appender</title>
+
+            <para>The <classname>FileSnapshotAppender</classname> writes the
+            snapshot to timestamped file. The following properties can be
+            specified:-</para>
+
+            <block>
+              <label>
+                <methodname>directory</methodname>
+              </label>
+
+              <para>The directory path where the files are to be created. If
+              none is specified then the working directory will be
+              used.</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>extension</methodname>
+              </label>
+
+              <para>The extension type to append to the file name.</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>fileName</methodname>
+              </label>
+
+              <para>The base name of the log file, which will have timestamp
+              appended. Defaults to 'log-snapshot-'.</para>
+            </block>
+
+            <para>The following example writes xml snapshots to the logs
+            directory to files ending with '.xml'.</para>
+
+            <programlisting format="linespecific">log4j.appender.Snapshot=org.nakedobjects.utility.logging.FileSnapshotAppender
+log4j.appender.Snapshot.bufferSize=1024
+log4j.appender.Snapshot.addInfo=true
+log4j.appender.Snapshot.locationInfo=true
+log4j.appender.Snapshot.directory=logs
+log4j.appender.Snapshot.extension=xml
+log4j.appender.Snapshot.layout=org.apache.log4j.xml.XMLLayout</programlisting>
+          </sect3>
+
+          <sect3>
+            <title>Popup snapshot appender</title>
+
+            <para>The <classname>PopupSnapshotAppender</classname> displays a
+            popup dialog showing the snapshot.</para>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="left" fileref="images/popup-snapshot.png"
+                           format="PNG" width="12.5cm" />
+              </imageobject>
+            </mediaobject>
+
+            <para>Do not use this on a server as there will be no one sitting
+            in front of it to see it. It has no properties so its
+            configuration is short.</para>
+
+            <programlisting format="linespecific">log4j.appender.Popup=org.nakedobjects.utility.logging.PopupSnapshotAppender
+log4j.appender.Popup.layout=org.apache.log4j.PatternLayout
+log4j.appender.Popup.layout.ConversionPattern=%-5r [%-20c{1} %-10t %-5p]  %m%n
+</programlisting>
+          </sect3>
+
+          <sect3>
+            <title>Email snapshot appender</title>
+
+            <para>The <classname>SmtpSnapshotAppender</classname> generates an
+            email with the snapshot in it and sends it to a specified
+            recipient. The following properties can be specified:-</para>
+
+            <block>
+              <label>
+                <methodname>server</methodname>
+              </label>
+
+              <para>Address of the email server</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>port</methodname>
+              </label>
+
+              <para>The port the server listen on for SMTP requests. Defaults
+              to port 25.</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>recipient</methodname>
+              </label>
+
+              <para>Email address to send the snapshot to.</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>domain</methodname>
+              </label>
+
+              <para>The address that client connects to the server with. Some
+              email servers validate the sender's address in the MAIL FROM
+              command so you may need to specify a real address here.</para>
+            </block>
+
+            <para>The following example sends a short HTML snapshot logs to
+            logs@support.acme.com, via the email server at my.emailserver.com
+            using port 25.</para>
+
+            <programlisting format="linespecific">log4j.appender.EmailSnapshot=org.nakedobjects.utility.logging.SmtpSnapshotAppender
+log4j.appender.EmailSnapshot.bufferSize=50
+log4j.appender.EmailSnapshot.addInfo=true
+log4j.appender.EmailSnapshot.server=my.emailserver.com
+log4j.appender.EmailSnapshot.port=25
+log4j.appender.EmailSnapshot.recipient=logs@support.acme.com
+log4j.appender.EmailSnapshot.layout=org.apache.log4j.HTMLLayout</programlisting>
+          </sect3>
+
+          <sect3>
+            <title>Socket snapshot appender</title>
+
+            <para>The <classname>SocketSnapshotAppender</classname>
+            establishes a socket connection to a server and passes across the
+            the snapshot. This is designed to be used with
+            <classname>SnapshotServer</classname>, which collects collects
+            snapshots from multiple clients. The following properties can be
+            specified:-</para>
+
+            <block>
+              <label>
+                <methodname>server</methodname>
+              </label>
+
+              <para>Address of the server.</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>port</methodname>
+              </label>
+
+              <para>The port the server listens on for logging requests.
+              Defaults to port 9289.</para>
+            </block>
+
+            <para>The following example sends an XML snapshot to a server on a
+            private network.</para>
+
+            <programlisting format="linespecific">log4j.appender.SocketSnapshot=org.nakedobjects.utility.logging.SocketSnapshotAppender
+log4j.appender.SocketSnapshot.bufferSize=1024
+log4j.appender.SocketSnapshot.addInfo=true
+log4j.appender.SocketSnapshot.server=191.168.1.1
+log4j.appender.SocketSnapshot.port=12345
+log4j.appender.SocketSnapshot.layout=org.apache.log4j.xml.XMLLayout</programlisting>
+
+            <para>The snaphot server should be directed to a maching running
+            the server. The server is run using the following command:</para>
+
+            <screen format="linespecific">java -cp nakedobjects.jar org.nakedobjects.utility.logging.SnapshotServer</screen>
+
+            <para>The server needs a properties file with the following
+            properties defined (with the prefix
+            <methodname>nakedobjects.snapshotserver.</methodname>):-</para>
+
+            <block>
+              <label>
+                <methodname>port</methodname>
+              </label>
+
+              <para>The port the server listens on for logging requests.
+              Defaults to port 9289.</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>directory</methodname>
+              </label>
+
+              <para>The directory path where the transferred files are to be
+              saved. If none is specified then the working directory will be
+              used.</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>fileName</methodname>
+              </label>
+
+              <para>The base name of the log file, which will have timestamp
+              appended. Defaults to 'log-snapshot-'.</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>extension</methodname>
+              </label>
+
+              <para>The extension type to append to the file name.</para>
+            </block>
+
+            <para>An example configuration would be:-</para>
+
+            <programlisting format="linespecific">nakedobjects.snapshotserver.port=12345
+nakedobjects.snapshotserver.directory=logs
+nakedobjects.snapshotserver.filename=log
+nakedobjects.snapshotserver.extension=xml</programlisting>
+          </sect3>
+
+          <sect3>
+            <title>Web snapshot appender</title>
+
+            <para>The <classname>WebSnapshotAppender</classname> sends the
+            snapshot to a web server. The following properties can be
+            specified:-</para>
+
+            <block>
+              <label>
+                <methodname>url</methodname>
+              </label>
+
+              <para>URL of server to post data to (including the protocol
+              'http').</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>proxyAddress</methodname>
+              </label>
+
+              <para>Address of web proxy if one is being used.</para>
+            </block>
+
+            <block>
+              <label>
+                <methodname>proxyPort</methodname>
+              </label>
+
+              <para>Port of proxy server.</para>
+            </block>
+
+            <para>The following example sends a default length snapshot to the
+            webserver.</para>
+
+            <programlisting format="linespecific">log4j.appender.Remote=org.nakedobjects.utility.logging.WebSnapshotAppender
+log4j.appender.Remote.addInfo=true
+log4j.appender.Remote.locationInfo=true
+log4j.appender.Remote.url=http://192.168.1.3/support/test.php
+log4j.appender.Remote.layout=org.apache.log4j.HTMLLayout</programlisting>
+
+            <para>This appender use the HTTP POST method to upload the data.
+            It passes up a message and the snapshot as two parameters to the
+            request: <variable>error</variable> and
+            <variable>trace</variable>.</para>
+          </sect3>
+        </sect2>
+
+        <sect2>
+          <title>Using logging to get help</title>
+
+          <para>When you are working with someone else it is often useful to
+          send details of what is happening including screenshots, code, and
+          logs. To make the other person's life easier provide as much
+          information as possible:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Detail the version of the framework and the platform (Java
+              or .Net) you are using</para>
+            </listitem>
+
+            <listitem>
+              <para>Describe the problem in detail</para>
+            </listitem>
+
+            <listitem>
+              <para>Provide screenshots (as a <filename class="directory"
+              moreinfo="none">.gif</filename> or <filename class="directory"
+              moreinfo="none">.png</filename>, avoid jpegs and Word documents)
+              that shows the problem</para>
+            </listitem>
+
+            <listitem>
+              <para>Provide log files from both the client and the server in
+              an XML format so they can be viewed using Chainsaw</para>
+            </listitem>
+
+            <listitem>
+              <para>Include your contact details, preferrably you email
+              address</para>
+            </listitem>
+          </itemizedlist>
+
+          <para>Collate all this information ensuring each file is clearly
+          named. Then zip up (or tar) the whole set (as the logs, in
+          particular, can be huge) and email the compressed file.</para>
+        </sect2>
+
+        <sect2>
+          <title>Adding logging to your code</title>
+
+          <para>It is recommended that you also add logging to your code,
+          particularly if you are developing a component or extending the
+          framework in some way. This way you will be able to see the
+          interaction of your classes with those of the NOF. The following
+          lays out how the framework uses Log4j, and hence how you should use
+          it to be consistent.</para>
+
+          <para>Simple ensure that any class that does any logging makes a
+          <classname>Logger</classname> available. By convention the name is
+          always <variable>LOG</variable>. The name of the logger should be
+          the name of the class in its fully qualified form. To make this easy
+          use the constructor that takes a <classname>Class</classname> object
+          and pass in your class using as shown here. Don't forget to add an
+          import to <classname>org.apache.log4j.Logger</classname>, not the
+          class of the same name in the NOF or in Java itself.</para>
+
+          <programlisting format="linespecific">private final static Logger LOG = Logger.getLogger(NakedClass.class);</programlisting>
+
+          <para>Where you wish to add log message add a statement like the
+          following, deciding first what level the event should be classified
+          as (see above); the available methods are
+          <methodname>debug</methodname>, <methodname>info</methodname>,
+          <methodname>warn</methodname>, <methodname>error</methodname> and
+          <methodname>fatal</methodname>.</para>
+
+          <programlisting format="linespecific">LOG.debug("mark as dirty " + object);
+
+LOG.error("failed to create instance of " + this, e);</programlisting>
+
+          <para>The first statement in this example contains just a message,
+          while the second version logs a message and, separately, the
+          complete stack trace.</para>
+
+          <sect3>
+            <title>Making you classes useful in logs</title>
+
+            <para>To make the most of logging, even if you don't log anything
+            in you code, make sure that you declare a
+            <methodname>toString</methodname> method in each of you classes.
+            This way when a log message is created that references your object
+            the message will show your object in detail rather than like
+            this:</para>
+
+            <screen format="linespecific">MyObject@33D4</screen>
+
+            <para>A suitable toString can cause it to be rendered more
+            usefully such as:</para>
+
+            <screen format="linespecific">MyObject [name=windows,size=34x20]</screen>
+          </sect3>
+        </sect2>
+      </sect1>
+
+      <sect1>
+        <title>Component loggers</title>
+
+        <para>The NOF provides a set of component loggers that specifically
+        log the use of a component, adding additional log messages to the
+        Log4j log or write out to a separate file. Additional logger can also
+        be defined for other components. These logger are designed to log the
+        parameters passed to and the the results return from the requests to a
+        component and tend to be more verbose than the general logging just
+        discussed. At present the following components have loggers
+        available:-</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>The object persistor -
+            <classname>ObjectPersistorLogger</classname></para>
+          </listitem>
+
+          <listitem>
+            <para>The object store -
+            <classname>ObjectStoreLogger</classname></para>
+          </listitem>
+
+          <listitem>
+            <para>The distibution interface -
+            <classname>DistributionLogger</classname></para>
+          </listitem>
+        </itemizedlist>
+
+        <para>To set up a logger create an instance of it passing in the
+        object you are logging. Then use the logger instance in place of the
+        original component. The constructors for each of the loggers are
+        overloaded so they take a component to decorate and possibly a file
+        name. If the filename is specified then the logging is done to that
+        file. If there is no file name then the events are logged via Log4j.
+        For example the object store persistor would logged by
+        replacing:</para>
+
+        <programlisting format="linespecific">NakedObjectPersistor persistor = new ObjectStorePersistor();
+nakedObjects.setObjectPersistor(persistor);</programlisting>
+
+        <para>with this, which will log request to the persistor the <filename
+        class="directory" moreinfo="none">sever-persistor.log</filename>
+        file:</para>
+
+        <programlisting format="linespecific">NakedObjectPersistor persistor = new ObjectStorePersistor();
+persistor = new ObjectManagerLogger(persistor, "server-persistor.log");
+nakedObjects.setObjectPersistor(persistor);</programlisting>
+
+        <para>Please note that the log files, when used, are created when the
+        logger is instantiated and will overwrite any exsiting file. This is
+        not normally a problem as we are interested in the activities during
+        an entire session. However on a stateless server where the component
+        is being recreated each time the continual recreation of the file
+        could be a problem.</para>
+
+        <sect3>
+          <title>Defining a logger</title>
+        </sect3>
+
+        <para>To define a logger extend the Logger class, providing a suitable
+        constructor, and implement the
+        <methodname>getDecoratedClass</methodname> so it passes back the
+        <classname>Class</classname> object of the class being decorated (this
+        allows the Log4j logger to log messages as that class rather than as a
+        separate class). Within the subclass you can use the following
+        methods:</para>
+
+        <block>
+          <label>
+            <methodname>void log(String message)</methodname>
+          </label>
+
+          <para>output a log entry with the specified message.</para>
+        </block>
+
+        <block>
+          <label>
+            <methodname>void log(String message, Object result)</methodname>
+          </label>
+
+          <para>output a log entry with the specified message and the
+          specified result. This is useful when needing to show both the entry
+          and exit states, or the paramters and the return value.</para>
+        </block>
+
+        <block>
+          <label>
+            <methodname>void close()</methodname>
+          </label>
+
+          <para>closes the file that is being written to.</para>
+        </block>
+      </sect1>
+
+      <sect1>
+        <title>Debugging from within the DND viewer</title>
+
+        <para>While using the NOF through the Skylark viewer you a have a
+        number of ways of looking at the state of the system. Every view,
+        including the desktop, has debug options that can be accessed by
+        Crtl-Shift-right-clicking. The following options might be useful to
+        you.</para>
+
+        <sect3>
+          <title>From the destop menu</title>
+        </sect3>
+
+        <block>
+          <label>Log Level OFF/ERROR/WARN/INFO/DEBUG</label>
+
+          <para>Change the log level in Log4j</para>
+        </block>
+
+        <block>
+          <label>Debug graphics on/off</label>
+
+          <para>Turn on or off the debug drawing within the viewer. This
+          sets/clears the <variable>AbstractView.debug</variable> variable,
+          which is used within draw methods to do additional drawing for debug
+          purposes.</para>
+
+          <screenshot fileref="images/degug-graphics.png" side="left"
+                      width="40%" wrap="no" />
+        </block>
+
+        <block>
+          <label>Show mouse spy</label>
+
+          <para>Brings up a debug window showing details about the mouse and
+          it position within the view hierarchy.</para>
+        </block>
+
+        <block>
+          <label>Restart object loader/persistor</label>
+
+          <para>Calls <methodname>reset</methodname> on the
+          <classname>NakedObjectLoader</classname> and
+          <classname>NakedObjectPersistor</classname> objects. This should
+          clear all the objects and adapters from memory, forcing them to be
+          reloaded from persistent storage. It is important not have any open
+          objects on the screen as these will no longer be linked to the known
+          objects and might cause problems.</para>
+        </block>
+
+        <block>
+          <label>Debug system</label>
+
+          <para>Brings up a debug frame showing debug details for the main
+          components of the system. These include the persistor, loader,
+          configuration, and specification loader.</para>
+
+          <screenshot fileref="images/debug-system.png" side="left"
+                      width="40%" wrap="no" />
+        </block>
+
+        <block>
+          <label>Debug viewer</label>
+
+          <para>Brings up a debug frame showing debug details for the Skylark
+          viewer.</para>
+
+          <screenshot fileref="images/debug-viewer.png" side="left"
+                      width="40%" wrap="no" />
+        </block>
+
+        <block>
+          <label>Dump log to snapshot</label>
+
+          <para>Creates a Log4j snapshot, which is send to each of the
+          snapshot appenders. This is only enabled if Log4j is setup with one
+          or more snapshot appenders.</para>
+        </block>
+
+        <sect2>
+          <title>From the view</title>
+
+          <para>1. From a view we have these debug options available on the
+          <emphasis>view</emphasis> menu:</para>
+
+          <block>
+            <label>Refresh view</label>
+
+            <para>Causes the view to be redisplayed after rereading the state
+            of the view's content. This only affects the values and not the
+            reference objects.</para>
+          </block>
+
+          <block>
+            <label>Invalidate content</label>
+
+            <para>Flag the view's content as invalid causing the view to be
+            recreated.</para>
+          </block>
+
+          <block>
+            <label>Invalidate layout</label>
+
+            <para>Flag the view's layout as invalid causing the view to be
+            relaid out.</para>
+          </block>
+
+          <block>
+            <label>Debug view</label>
+
+            <para>Brings up a debug frame showing debug details for the
+            current view/object. These include the adapter's state, the domain
+            object graph, the object specification, the view's content object,
+            the structure of the view, and a full listing of the drawing done
+            to render the view.</para>
+
+            <screenshot fileref="images/debug-view.png" side="left"
+                        width="40%" wrap="no" />
+          </block>
+
+          <para>2. Also from the view we have these debug options available on
+          the <emphasis>object</emphasis> menu:</para>
+
+          <block>
+            <label>Destroy object</label>
+
+            <para>Forces a destory call to the object persistor.</para>
+          </block>
+
+          <block>
+            <label>Clear resolve</label>
+
+            <para>Forces the object's resolve state back to
+            <emphasis>Ghost</emphasis>.</para>
+          </block>
+
+          <block>
+            <label>Debug view</label>
+
+            <para>Brings up a debug frame showing debug details for the
+            current view/object (see above).</para>
+          </block>
+        </sect2>
+      </sect1>
+
+      <sect1>
+        <title>Writing code to help investigate problems</title>
+
+        <sect2>
+          <title>The Dump Utility</title>
+
+          <para>The <classname>org.nakedobjects.object.Dump</classname> class
+          provides a simple way out outputting the details of adapters and
+          specifications. The two <methodname>specification
+          </methodname>methods detail the specified
+          <classname>NakedObjectSpecification</classname> as follows:-</para>
+
+          <screen format="linespecific">Full Name: bom.Location
+Short Name: Location
+Plural Name: Locations
+Singular Name: Location
+
+Abstract: false
+Lookup: false
+Object: true
+Value: false
+Persistable: User Persistable
+Superclass: java.lang.Object
+Subclasses: empty
+Interfaces: bom.Common
+Fields
+    OneToOneAssociationImpl@1408a92 [type=VALUE,id=type,label='Type',derived=false,type=Option]
+    :
+    :</screen>
+
+          <para>The two <methodname>object</methodname> methods detail the
+          specified <classname>Naked</classname> object as follows:-</para>
+
+          <screen format="linespecific">Specification: bom.Location
+Class: bom.Location
+Adapter: org.nakedobjects.object.defaults.PojoAdapter
+Hash: #dada24
+Title: test, Fort Worth
+Object: bom.Location@18e4327
+OID: OID#2F
+State: ResolveState@1e1be92 [name=Resolved,code=PR]
+Version: LongNumberVersion#1 20051118-025400170
+Icon: null
+Persistable: User Persistable</screen>
+
+          <para>The two <methodname>graph</methodname> methods detail the
+          specified <classname>Naked</classname> object as follows, showing
+          each adapter, it associated objects and values:-</para>
+
+          <screen format="linespecific">PojoAdapter@dada24 [PR:OID#2F,specification=Location,version=LongNumberVersion#1 20051118-025400...
+    +--type: POJO BusinessValueAdapter: One
+    +--knownas: POJO TextStringAdapter: test
+    +--streetaddress: POJO TextStringAdapter: address
+    +--city: PojoAdapter@b51404 [PR:OID#C,specification=City,version=LongNumberVersion#1 ...
+    |    +--name: POJO TextStringAdapter: Fort Worth
+    +--customer: PojoAdapter@92dcdb [PR:OID#1C,specification=Customer,version=LongNumberVers...
+    |    +--firstname: POJO TextStringAdapter: Richard
+    |    +--lastname: POJO TextStringAdapter: Pawson
+    |    +--phonenumbers: VectorCollectionAdapter@1d381d2 [PR:-,specification=Vector,version=...
+    : 
+    :</screen>
+        </sect2>
+
+        <sect2>
+          <title>The DebugInfo interface and the debug viewer</title>
+
+          <para>The framework provides a viewer for showing the debug details
+          about any object in the system that implements the
+          <classname>DebugInfo</classname> interface. The
+          <classname>InfoDebugFrame</classname> shows one or more tabs of
+          <classname>DebugInfo</classname> objects. As it is Java Frame it can
+          be set up as follows.</para>
+
+          <programlisting format="linespecific">import org.nakedobjects.utility.InfoDebugFrame;
+:
+:
+InfoDebugFrame frame = new InfoDebugFrame();
+frame.setInfo(objectSupportingDebugInfo);
+frame.show();</programlisting>
+
+          <para>The <methodname>setInfo</methodname> mehtod is overloaded to
+          take an array of debug objects.</para>
+
+          <para>To make an object displayable implement the
+          <classname>DebugInfo</classname> interface. The
+          <methodname>debugTitle()</methodname> should return a simple title,
+          and the <methodname>debugData(DebugString)</methodname> should add
+          details to the <classname>DebugString</classname> object to build up
+          suitable debug output. <classname>DebugString</classname> is an
+          appender, like <classname>StringBuffer</classname>, but which
+          provides indentation and a way to add label and detail pairs.</para>
+
+          <javadoc class="DebugInfo" comments="yes" outline="no"
+                   package="org.nakedobjects.utility" />
+
+          <javadoc class="DebugString" comments="yes" outline="no"
+                   package="org.nakedobjects.utility" />
+        </sect2>
+      </sect1>
+    </chapter>
+  </part>
+
+  <part>
+    <title>Extending the NOF</title>
+
+    <chapter>
+      <title>Creating a facet decorator</title>
+
+      <section>
+        <title></title>
+
+        <para></para>
+      </section>
+    </chapter>
+  </part>
+
+  <part>
+    <title>How it all works</title>
+
+    <chapter>
+      <title>Startup</title>
+
+      <para>There are two startup mechanisms provided with Naked Objects: a
+      naked object container; and a web container based on Jetty. Both are run
+      from the command line and allow parameters to be specified that control
+      its behaviour, determing how logging is performed, what components are
+      loaded and so on.</para>
+
+      <para>The Naked Objects container is run using the
+      <classname>NakedObjects</classname> class from the core-runtime
+      module.</para>
+
+      <para>Another way to run Naked Objects is in a independent web container
+      like Tomcat or WebSphere. This process is dealt with later.</para>
+
+      <section>
+        <title>General process</title>
+
+        <para>The first thing that happens is the logging is set up so that
+        everything can be logged. This attempts to load
+        <filename>logging.properties</filename> from the
+        <filename>config</filename> directory on the filesystem and if that
+        cannot be found it will look for the same file in the same directory
+        on the classpath. If neither of these are found then a default logging
+        configuration will be programmatically installed that writes to the
+        console.</para>
+
+        <para>Now that logging is initialised the container can prepare for
+        bootstrapping the system. The first task is load up all the component
+        installers, which is done by the InstallerLookupDefault class. This
+        reads the <filename>installer-registry.properties</filename> file from
+        classpath and attempts to load each class listed. Any class not found
+        is logged so it is easy to determine if a component should be
+        available. Each installer simply knows how to install a component; the
+        component is not loaded at this stage.</para>
+
+        <para>Now the container knows what components are available a series
+        of option handlers (<classname>OptionHandler</classname>) are
+        intialise, with addtional one provided by the Naked Objects container
+        and web server subclasses. These interact with the Apache CLI library
+        to provide details about the command line parameters and will lookup
+        the available components so they can be listed on the command line
+        help. With the handlers set up the command line is parsed using the
+        Apache library. If this parse fails then the library generates a error
+        message with an option summary and displays via the console and the
+        startup process terminates.</para>
+
+        <para>The last step before bootstrapping starts is to prepare the
+        ground for using congfiguration properties. Configuration details are
+        loaded by a <classname>ConfigurationBuilder</classname> object and
+        will be subsequently placed in an immutable
+        <classname>NakedObjectConfiguration</classname> object. Immediately
+        after this has been created each handler is visited so that it can,
+        via its <methodname>primeConfigurationBuilder</methodname> method, add
+        it properties to the builder. This way each command line option is
+        converted to one or more properties of the same form as can be
+        specified in the properties files, hence we only need one way to
+        determine how the system is to be run.</para>
+
+        <para>Now that the ground has been prepared it is time for the
+        bootstrapping to begin. This is done via a call to the
+        <methodname>bootstrapNakedObjects</methodname> method, which is where
+        the process differs for the Naked Objects container and the web
+        server.</para>
+      </section>
+
+      <section>
+        <title>Naked Objects Container</title>
+
+        <para></para>
+      </section>
+    </chapter>
+
+    <chapter>
+      <title>Application library</title>
+
+      <section>
+        <title></title>
+
+        <para></para>
+      </section>
+    </chapter>
+
+    <chapter>
+      <title>Creating an object store</title>
+
+      <para>To set up the database I have added some creation commands to the
+      main method. This gives us a way to set up the database via Java rather
+      than resorting to a database tool. This is done to avoid demonstrating
+      how to use another tool. Ideally an object store like this manage the
+      creation of the tables, but again for demonstration purposes this show
+      the simplest, if least versatile, option.</para>
+
+      <para><xi:include href="../extracts/extracts.xml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xpointer="ExampleObjectStore_createDatabase" /></para>
+
+      <para></para>
+
+      <para>When a object is persisted the object store's
+      <methodname>createCreateObjectCommand</methodname> method is called.
+      This create a command object (see GoF Patterns books), which will later
+      be processed when the transaction is be commited. All persistence
+      actions (create, destroy and save) are collected together until this
+      point. This way when a transaction is aborted all commands can be thrown
+      away without recourse to the database. Specifically it is the
+      <methodname>execute</methodname> method that is called on the command,
+      and this command runs an insert command agains the the database.</para>
+
+      <para><xi:include href="../extracts/extracts.xml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xpointer="ExampleObjectStore_addCommand" /></para>
+    </chapter>
+
+    <chapter>
+      <title>Configuration</title>
+
+      <para></para>
+    </chapter>
+
+    <chapter>
+      <title>Reflector</title>
+
+      <para>The reflector provides the NOF with two distinct facilities. First
+      it provides the framework with a model of the domain objects that it
+      will be using, and second, it provides a mechanism for the framework and
+      the clients of the framework to access and maniplate the domain objects
+      (the framework and its clients should never interact with the domain
+      objects directly).</para>
+
+      <para>This section is divided into two. The first part looks at how the
+      reflector is used by the framework and its clients, while the second
+      part looks at how the reflector itself works and how it can be
+      extended.</para>
+
+      <para></para>
+
+      <sect1>
+        <title>Using the reflector</title>
+
+        <para></para>
+
+        <para>When the framework starts up it is told about the service
+        objects that are provided by DOM and any referenced class is then
+        introspected to build up the model of the known domain objects. Any
+        other domain classes that are subsequently used will also be reflected
+        upon as they are used (this will happen when there are classes that
+        have no direct references from the service objects, typically because
+        the references are for abstract types and not concrete ones). With the
+        model in place clients can then determine how to interact with the
+        domain model. Each domain class that is in use by the framework has a
+        corresponding <classname>NakedObjectSpecification</classname>
+        detailing the properties and structure of the domain class. Properties
+        include the classes variouse names (full, short, singular and plural
+        names), a description and flags indicating various features. The
+        structure of the object includes related classes (superclass,
+        subclasses and implemented interfaces), properties and actions. In
+        additions to these common elements there are also a set of
+        <classname>Facet</classname>s associated with each specification that
+        provide additional information about and behaviour for the
+        class.</para>
+
+        <para></para>
+
+        <remark>Classes: MemberIdentifier</remark>
+
+        <sect2>
+          <title>Specifications</title>
+
+          <para>The specification is typically got from an adapted domain
+          object via the
+          <methodname>NakedObject.getSpecification()</methodname> method, but
+          can also be looked up via the
+          <emphasis>NakedObjectReflector.loadSpecification()</emphasis> method
+          (for a class object or class name) as follows</para>
+
+          <programlisting>NakedObjectSpecification spec;
+spec = NakedObjectsContext.getReflector().loadSpecification(Book.class);
+String screenName = spec.getSingularName();</programlisting>
+
+          <para></para>
+        </sect2>
+
+        <sect2>
+          <title>Properties</title>
+
+          <para></para>
+
+          <formalpara>
+            <title></title>
+
+            <para></para>
+          </formalpara>
+
+          <para>From the specification an array of every available property
+          can be access via the <methodname>getProperties()</methodname>
+          method and an individual property can be accessed via the
+          <methodname>getProperty(String)</methodname> method, where the sole
+          parameter is the the identifier of the property. For the included
+          introspector the property identifier will be the name of the
+          property method with the <emphasis>get</emphasis> prefix removed,
+          and the first character of the remaining string converted to
+          lowercase, so <methodname>getCustomerId()</methodname> become
+          <emphasis>customerId</emphasis>. Typically the complete list of
+          properties is used for things like persistence and remoting, user
+          interfaces need to consider what properties they show to avoid
+          making hidden or unauthorised properties visible.</para>
+
+          <para>To gather a selective set of properties for a specification
+          you can use the .... method.</para>
+
+          <para>All properties detailed are as
+          <classname>NakedObjectAssociation</classname> objects, specifically
+          <classname>OneToOneAssociation</classname> and
+          <classname>OneToManyAssociation</classname> for value and reference
+          objects and collections respectively. Each association object knows
+          what type it for (<methodname>getSpecification()</methodname>), can
+          provide its name, description and help text, determine whether it
+          should be visible and useable, provides various flags indicating its
+          usage and provides access to the facets that exist a the property
+          level.</para>
+
+          <programlisting>NakedObjectAssociation[] properties = spec.getProperties();
+for (int i = 0; i &lt; properties.length; i++) {
+    String name = properties[i].getName();
+    boolean mustEnter = properties[i].isMandatory();
+    :
+    :
+}</programlisting>
+
+          <para>To selectively get hold of properties the
+          <methodname>getProperties(NakedObjectAssociationFilter)</methodname>
+          method should be used. The
+          <classname>NakedObjectAssociationFilter</classname> class allows us
+          to set up a search filter to get properties based on name, type,
+          facet etc. Predefined instances and factory methods are available
+          from the <classname>Filters</classname> and
+          <classname>DynamicFilters</classname> classes or you can extend the
+          <classname>NakedObjectAssociationFilter</classname> class to create
+          your own. Two useful predefined versions are the
+          <varname>Filters.STATICALLY_VISIBLE</varname> instance and the
+          <methodname>DynamicFilters.dynamicallyVisible(NakedObject)</methodname>
+          factory method. Using these filters you can find the properties that
+          are visible on a particular type and for a particular object, in
+          other words excluding those that where hidden during definition
+          (using anotations etc) and those that are programatically hidden
+          depending on role or state. Typically views are created using only
+          dynamically visible properties so hidden fields are not visible and
+          do not have any screen space reserved form them. In particular views
+          all the possible properties might need space although the final
+          propert might not be shown, a good example of this is table views
+          where each statically visible property has a column created for it,
+          while for each object shown in table only the dynamically visible
+          properties for that object are show (ie there may be blank
+          cells).</para>
+
+          <para></para>
+
+          <programlisting>NakedObjectAssociationFilter filter = DynamicFilters.DynamicFilters.dynamicallyVisible(object);
+NakedObjectAssociation[] properties = object.getSpecification().getProperties(filter);
+for (int i = 0; i &lt; properties.length; i++) {
+    addField(properties[i].getName(), createFieldView(properties[i]));
+}</programlisting>
+
+          <para></para>
+
+          <para></para>
+        </sect2>
+
+        <sect2>
+          <title>Actions</title>
+
+          <para></para>
+        </sect2>
+      </sect1>
+
+      <sect1>
+        <title>Extending the reflector</title>
+
+        <remark>Describe how introspection takes place</remark>
+
+        <para></para>
+
+        <remark>Facets (describe (including how they are defined, how they are
+        used), then list all types with descriptions; Javadocs should detail
+        how to use each one, but do check as working through list)</remark>
+
+        <para></para>
+
+        <remark>Detail how introspector determines what facets to give to each
+        holder</remark>
+
+        <para></para>
+
+        <remark>Adding behaviour via decorator facets, eg for I18n, logging
+        etc</remark>
+
+        <para></para>
+
+        <remark>Adding new behaviour by adding new facets, including how to
+        access then</remark>
+
+        <para></para>
+
+        <formalpara>
+          <title>Interaction utilties</title>
+
+          <para>Other than the properties and actions that the are made
+          available by the reflector the other way the reflector is used is
+          via by the reflector utilities classes <remark>I don't think this
+          name really reflects the intent, a better one is required</remark>
+          such as InteractionUtils and CollectionUtils. These helper classes
+          generally make use of the <classname>Facet</classname>s on a
+          <classname>FacetHolder</classname> to interact with the domain
+          model. For example the <methodname>size(NakedObject)</methodname>
+          method on the <classname>CollectionFacetUtils</classname> class will
+          determine the size of the collection without having to resort to
+          finding the right facet and using that yourself.</para>
+        </formalpara>
+
+        <para>These utility classes then make use of the related facets (got
+        singularly or a set via the
+        <methodname>getFacets(FacetFilter)</methodname> method that typically
+        search for facets using the mix-in interfaces that are used to mark
+        the facets for this kind of use) which are then all process on behalf
+        of the client. For example, the <methodname>isVisible</methodname>
+        method get all the facets to do with hidding things by filtering for
+        facets that <classname>are of the type
+        HidingInteractionAdvisor</classname>. This interface is implemented by
+        hide-related facets</para>
+
+        <para></para>
+
+        <para></para>
+
+        <para><classname>DisablingInteractionAdvisor</classname>,
+        <classname>HidingInteractionAdvisor</classname> and
+        <classname>ValidatingInteractionAdvisor</classname> interfaces are
+        used to bring together all facets for disabling, hiding and validating
+        properties, actions and parameters. These each provide a single method
+        for for checking a proposed interaction. These are then used by the
+        <classname>InteractionUtils</classname> class to provide all the
+        domain related interaction checking behaviour to the clients of the
+        reflector</para>
+      </sect1>
+    </chapter>
+
+    <chapter>
+      <title>Naked objects</title>
+
+      <para>Naked objects wrap each domain object in the system. The rest of
+      the framework does not normally work with the domain objects directly,
+      but via these proxies. The proxies provide access to the tools of the
+      reflector by providing a <classname>NakedObjectSpecification</classname>
+      for the object's class and to access additional information about the
+      domain object. The specification is accessed via the
+      <methodname>getSpecification()</methodname> method and is then used with
+      the proxy as a mechanism to access and manipulate the domain object.
+      Other key methods on the proxy allow access to the: object identifier,
+      via the getOid() method to get its unique OID; version information, via
+      <methodname>getVersion()</methodname> to get it current Version object;
+      and its lazy loaded state, via the
+      <methodname>getResolved()</methodname> state returning the
+      <classname>ResolvedSate</classname> object reflecting how complete the
+      object is.</para>
+
+      <formalpara>
+        <title>Object identifiers (OIDs)</title>
+
+        <para>Any domain object that is not a composite part of another domain
+        object must have an identity so that the references between objects
+        can be persisted for future access and transferred between VMs. The
+        OID must be unique so that a one to one mapping can be maintained
+        between an <classname>Oid</classname> and a
+        <classname>NakedObject</classname>, and hence a domain object. Using
+        the OID the client and server can have copies of the same objects and
+        identify those objects remotely and persistently. The identity is held
+        by the proxy is an <classname>Oid</classname> object. The OID for a
+        specific domain object is unique and will not change other than when
+        the object is persisted. Until that point it has a transient OID that
+        is morphed into the persistent OID when the object is persisted. This
+        is so that the transient objects can be passed back and forth between
+        client and server, and once persisted both ends can match the identity
+        of the previously transient object with the identity of the now
+        persistent object.</para>
+      </formalpara>
+
+      <para>When an object is made persistent (typically via the persistor and
+      specifically via <classname>OidGenerator</classname>) its OID is changed
+      to reflect this and also to allow the persistor to provide its own
+      identifier (as is necessary when using natural keys in a relational
+      database backend). So the <methodname>isTransient()</methodname> state
+      changes from <code>true</code> to <code>false</code> while the internal
+      id state might be changed. More visibly, the previous state of the OID
+      is copied so that <methodname>getPrevious()</methodname> now returns a
+      copy of the original OID instead of null and
+      <methodname>hasPrevious()</methodname> will return true.</para>
+
+      <para>When a OID with a previous OID is used to retrieve an object from
+      the persistor the persistor first checks the OID and if
+      <methodname>hasPrevious()</methodname> returns <code>true</code> the
+      original tranisent object is retrieved, that object is removed from the
+      cache, its OID is updated (via the
+      <methodname>copyFrom(Oid)</methodname> method) and then it is returned
+      to the cache. This results in the newly persisted object having the new
+      persistent OID and it being accessible as such from the cache. At this
+      point the original version's transient state will no longer be
+      recognised.</para>
+
+      <formalpara>
+        <title>Resolved state</title>
+
+        <para></para>
+      </formalpara>
+
+      <formalpara>
+        <title>Version</title>
+
+        <para></para>
+      </formalpara>
+    </chapter>
+
+    <chapter>
+      <title>Persistor</title>
+
+      <para>The persistor is tasked with managing all of the domain objects
+      and ensuring that they can be retrieved in the futures. In addition to
+      it more obvious role in the storing of objects the persistor must also
+      manage the object that are memory. This second task is known a identity
+      mapping and is required to ensure that any domain object only ever has
+      one adapter for it. If more than one adapter exists for an object then
+      there will be risk that the system has .......</para>
+
+      <para></para>
+
+      <para></para>
+
+      <para></para>
+
+      <formalpara>
+        <title>Object identity map</title>
+
+        <para>A persistor should utilise an object-identity map (see Martin
+        Fowler's Patterns of Enterprise Application Architecture) to manage
+        the mapping of domain objects and adapters, and OIDs and adapters. For
+        each domain object the map should store a single adapter, and an OID
+        to that same adapter. The persitor can then guarantee that the same
+        adapter is always provided for a specific domain object or OID.</para>
+      </formalpara>
+
+      <para></para>
+
+      <formalpara>
+        <title>Creating adapters</title>
+
+        <para>Numerous methods exist in the persistor (see
+        <classname>NakedObjectManager</classname>) for creating adapters.
+        These methods do three things. First, they insure that there is no
+        existing adapter for a domain object or OID, and if there is one then
+        that adapter is returned to the caller immediately. Assuming there is
+        no existing adapter then a new one is created for the domain object
+        and the adapter's OID and resolved state are initialised. The OID is
+        typically set to the one provided during the reuqest except when a new
+        domain object is being created, in which case a new transient OID is
+        created for it. The resolved state reflects the type of object and its
+        persistent state. Newly created objects end up with
+        <constant>TRANSIENT</constant>, persistent ones with
+        <constant>GHOST</constant> and for objects that are aggregated the
+        state is intialised to <constant>AGGREGATED (see
+        ResolvedState)</constant>.</para>
+      </formalpara>
+    </chapter>
+
+    <chapter>
+      <title>Drag and drop user interface</title>
+
+      <para>The Drag and Drop User Interface (DnD UI) dynamically renders the
+      domain objects held within the system onto various styles of views and
+      automatically provides mechanisms such as menus and dialogs to interact
+      with those same objects.</para>
+
+      <para></para>
+
+      <para>Each view is set up by a <classname>ViewSpecification</classname>
+      that defines how to create a specific view. These specifications know
+      what content they can render via the
+      <methodname>canDisplay()</methodname> method.</para>
+
+      <para></para>
+
+      <para></para>
+
+      <section>
+        <title>Drawing</title>
+
+        <para>Each view can be drawn on buy overriding the
+        <methodname>draw(Canvas)</methodname> method in the view class. The
+        <classname>Canvas</classname> is the drawing surface for the view and
+        the class provides the tools for drawing lines, rectangles, eclipses,
+        text etc. The <classname>Canvas</classname> is used for both drawing
+        to screen and printing via the <methodname>print(Canvas)</methodname>
+        method (when extending the AbstractView the print method simply
+        delegates to the draw method so the former only needs implementing if
+        the rendering for printing is to be different to that shown on the
+        screen). The colour and text style that the drawing methods accept can
+        be got from the <classname>Toolkit</classname> class via the
+        <methodname>getColor</methodname> and <methodname>getText</methodname>
+        methods. The positioning of the drawing on the canvas is across and
+        down from the top-left corner of the canvas (unless an offset has been
+        added using the <methodname>offset(int xOffset, int
+        yOffset)</methodname> method, which will effectively cause every
+        <emphasis>x</emphasis> and <emphasis>y</emphasis> coordinate specified
+        thereafter to be translated to <emphasis>x + xOffset</emphasis> and
+        <emphasis>y + yOffset</emphasis> respectively).</para>
+
+        <para>The following example shows a simple but complete drawing method
+        that not just draws some text and lines but ensures that components
+        always sit properly together irrespective of the content text, which
+        is dynamic as it got from the object that this view is for. This was
+        defined in a subclass of <classname>AbstractView</classname> so there
+        is a call to the <methodname>draw</methodname> method in super class
+        as this will draw debug borders when debugging is turn on.</para>
+
+        <programlisting>    public void draw(Canvas canvas) {
+        super.draw(canvas);
+
+        String text = getContent().title();
+
+        Text textStyle = Toolkit.getText("normal");
+        
+        int x = HPADDING;
+        int y = VPADDING;
+        int maxWidth = 100;
+        int width = textStyle.stringWidth(text, maxWidth) + HPADDING * 2;
+        int height = textStyle.stringHeight(text, maxWidth) + VPADDING * 2;
+        
+        Color borderColor = Toolkit.getColor("secondary1");
+        Color backgroundColor = Toolkit.getColor("secondary3");
+        canvas.drawSolidRectangle(x, y, width, height, backgroundColor);
+        canvas.drawRectangle(x, y, width, height, borderColor);
+
+        x += HPADDING;
+        y += textStyle.getAscent();
+        Color textColor = Toolkit.getColor("primary1");
+        canvas.drawText(text, x, y, maxWidth, textColor,  textStyle);
+    }</programlisting>
+
+        <remark>Detail how this method works....</remark>
+
+        <para></para>
+
+        <remark>Add JavaDoc comments for: Canvas; Toolkit, View, AbstractView
+        (draw, print)</remark>
+      </section>
+    </chapter>
+
+    <chapter>
+      <title>Change listener</title>
+
+      <para>Changes to objects are collected by the
+      <classname>UpdateNotifier</classname> object once they have been
+      persisted. These changes can then be asynchronously accessed by a client
+      to keep it in sync with the underlying model. Once changes are retrieved
+      by client the notifier resets its collection so that changes are only
+      available once.</para>
+
+      <para>Within the framework, specifically the persistor, when objects
+      changes and deletions are persisted the notifier should be informed via
+      its <methodname>addChangedObject(NakedObject)</methodname> and
+      <methodname>addDisposedObject(NakedObject)</methodname> methods.</para>
+
+      <para>Clients should use the
+      <methodname>allChangedObjects()</methodname> and
+      <methodname>allDisposedObjects()</methodname> to get an
+      <classname>Enumeration</classname> of the changes.</para>
+
+      <para>The notifier itself can be got from system context using
+      <methodname>NakedObjectsContext.getUpdateNotifer()</methodname>.</para>
+    </chapter>
+  </part>
+
+  <part id="reference1">
+    <title>Reference</title>
+
+    <chapter>
+      <title>Configuration</title>
+
+      <para>Using properties specified in the configuration files is done by
+      get the <classname>NakedObjectConfiguration</classname> singleton from
+      the context and using one of the lookup methods to get a value, as the
+      example below shows. The <literal
+      moreinfo="none">Configuration.ROOT</literal> constant provides the base
+      property name ("nakedobjects."). If no value is found with the specified
+      property name exists then null (or 0 or false) will be returned.</para>
+
+      <programlisting format="linespecific">String formatRequired = NakedObjectsContext.getConfiguration().getString(Configuration.ROOT + "value.format.date");</programlisting>
+
+      <sect1>
+        <title>Property naming conventions</title>
+
+        <para>Properties used within the framework start with 'nakedobjects',
+        which is available from the <literal
+        moreinfo="none">Configuration.ROOT</literal> constant. Next is the
+        category and optionally a component. Finally is the property name
+        (which can be as many levels as needed) for the component. Examples
+        are:</para>
+
+        <programlisting format="linespecific">nakedobjects.viewer.cli.log
+nakedobjects.services.prefix
+nakedobjects.viewer.dnd.specification.view
+nakedobjects.exploration.users
+nakedobjects.viewer.html.header</programlisting>
+      </sect1>
+
+      <sect1>
+        <title>Available methods</title>
+
+        <javadoc class="NakedObjectConfiguration" comments="yes" outline="no"
+                 package="" />
+      </sect1>
+    </chapter>
+
+    <chapter>
+      <title>File name conventions used within Naked Objects
+      distributions</title>
+
+      <sect1>
+        <title>File names</title>
+
+        <para>The names given to then download files indicate what the product
+        is, which platform it runs on and its version. The version indicates
+        the stage of development and how stable the system should be. The file
+        name format is as follows:</para>
+
+        <screen format="linespecific">nakedobjects-[version]-[build]-[product]-[platform].[file-type]</screen>
+
+        <para>For example:-</para>
+
+        <screen format="linespecific">nakedobjects-3.0M3-r1258-demo-java.zip
+nakedobjects-3.0M3-r1258-developer-java.zip
+nakedobjects-3.0M3-r1258-source.zip</screen>
+
+        <para>The parts of the name are:</para>
+
+        <variablelist>
+          <varlistentry>
+            <term>version</term>
+
+            <listitem>
+              <para>see next section</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>build</term>
+
+            <listitem>
+              <para>The build number is the revision of the repository sources
+              used when the distribution was built.</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>product</term>
+
+            <listitem>
+              <para>At the moment we distribute the core framework, which is
+              <methodname>nof-developer</methodname>, and a demo version,
+              <methodname>nof-demo</methodname>.</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>platform</term>
+
+            <listitem>
+              <para>We target two platforms with the core framework; Java and
+              .NET (indicated as <methodname>java</methodname> and
+              <methodname>dotnet</methodname>). Other components might support
+              either or both. Also available is a source distribution, which
+              does not contain any binary code and must be built before it can
+              be used.</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>file-type</term>
+
+            <listitem>
+              <para>The file type is <filename moreinfo="none">zip</filename>
+              or <filename moreinfo="none">tar.gz</filename> (GNU compressed
+              tar).</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </sect1>
+
+      <sect1>
+        <title>Versions</title>
+
+        <variablelist>
+          <varlistentry>
+            <term>n.n.n</term>
+
+            <listitem>
+              <para>Stable release, with version number split into major,
+              minor and fix components. Major versions develop upon, but do
+              not limit themselves to, the previous major version. Minor
+              versions extend the previous version while maintaining
+              compatibility with them. Fix versions fix problems in the
+              existing version, but do not add any new functionality.</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>n.nRCn or n.nMnRCn</term>
+
+            <listitem>
+              <para>Release candidates are preliminary releases of a stable
+              version. Assuming that no majors issues arise with such a
+              release it will subsequently be promoted to a stable release,
+              and the code re-released.</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>n.nMn</term>
+
+            <listitem>
+              <para>Milestones within a version of the NOF are relatively
+              stable versions of the framework that introduce new
+              functionality that is part of the development plan for the
+              versioned release. The milestones precede the versioned
+              releases, that is 3.0M3 will be released as part of the
+              development of 3.0. Functionality within the milestones for a
+              major version is not fixed and may change as further development
+              takes place.</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>n.nDn or n.nMnDn</term>
+
+            <listitem>
+              <para>Development releases are work in progress during the
+              development of the current milestone or major/minor version.
+              These should generally be usable as they are not normally
+              released when the code has known major problems.</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>n.nDn-SNAPSHOT or n.nMnDn-SNAPSHOT</term>
+
+            <listitem>
+              <para>Snapshot releases are released on an regular basis, and
+              hence may not even be runnable, depending that state of
+              development. These are generally a way to keep up with latest
+              development without using subversion.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </sect1>
+    </chapter>
+
+    &filename-convention;
+  </part>
+</book>
